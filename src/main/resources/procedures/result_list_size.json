@@ -1,0 +1,21 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "list",
+      "check": "ResultList"
+    }
+  ],
+  "inputsInline": true,
+  "output": "Number",
+  "colour": "#5b67a5",
+  "mcreator": {
+    "toolbox_id": "just_enough_recipes",
+    "inputs": [
+      "list"
+    ],
+    "required_apis": [
+      "jei"
+    ]
+  }
+}
