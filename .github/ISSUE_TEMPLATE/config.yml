@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: "Check if existing issues already exist"
-    url: https://github.com/zSemper/Tasks-MCreator-Plugin/issues
+    url: https://github.com/zSemper/Just-Enough-Recipes-MCreator-Plugin/issues
     about: The place for issues
   - name: "Fluid Control's forum page"
-    url: about:blank
+    url: https://mcreator.net/plugin/118595/just-enough-recipes-20252
     about: Alternative place to report bugs or feature requests, also place for support questions
