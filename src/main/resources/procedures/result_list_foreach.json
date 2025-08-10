@@ -23,7 +23,7 @@
   "nextStatement": null,
   "colour": "#a55ba5",
   "mcreator": {
-    "toolbox_id": "just_enough_recipes",
+    "toolbox_id": "jer_result_lists",
     "toolbox_init": [
       "<value name=\"iterator\"><block deletable=\"false\" movable=\"false\" enabled=\"false\" type=\"itemstack_iterator\"></block></value>"
     ],

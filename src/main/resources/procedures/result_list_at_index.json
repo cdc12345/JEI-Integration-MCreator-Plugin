@@ -15,7 +15,7 @@
   "output": "MCItem",
   "colour": "#a55b67",
   "mcreator": {
-    "toolbox_id": "just_enough_recipes",
+    "toolbox_id": "jer_result_lists",
     "toolbox_init": [
       "<value name=\"index\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value>"
     ],

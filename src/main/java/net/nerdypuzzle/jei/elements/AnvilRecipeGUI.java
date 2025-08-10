@@ -2,9 +2,9 @@ package net.nerdypuzzle.jei.elements;
 
 import net.mcreator.minecraft.ElementUtil;
 import net.mcreator.ui.MCreator;
+import net.mcreator.ui.MCreatorApplication;
 import net.mcreator.ui.component.util.PanelUtils;
 import net.mcreator.ui.help.HelpUtils;
-import net.mcreator.ui.help.IHelpContext;
 import net.mcreator.ui.init.L10N;
 import net.mcreator.ui.minecraft.MCItemHolder;
 import net.mcreator.ui.modgui.ModElementGUI;
@@ -20,6 +20,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class AnvilRecipeGUI extends ModElementGUI<AnvilRecipe> {
+    private final Object[] noParams = new Object[0];
 
     private final ValidationGroup page1group = new ValidationGroup();
     private MCItemHolder leftitem;
@@ -41,20 +42,28 @@ public class AnvilRecipeGUI extends ModElementGUI<AnvilRecipe> {
         rightitem = new MCItemHolder(mcreator, ElementUtil::loadBlocksAndItems);
         output = new MCItemHolder(mcreator, ElementUtil::loadBlocksAndItems);
 
-        JPanel pane1 = new JPanel(new BorderLayout());
-        pane1.setOpaque(false);
-        JPanel mainPanel = new JPanel(new GridLayout(5, 2, 0, 2));
+        // Global
+        JPanel globalPanel = new JPanel(new BorderLayout());
+        globalPanel.setOpaque(false);
+
+
+        JPanel mainPanel = new JPanel(new GridLayout(6, 2, 2, 2));
         mainPanel.setOpaque(false);
 
-        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/left_item"), L10N.label("elementgui.anvilrecipe.left_item", new Object[0])));
+        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/anvil/left_item"), L10N.label("elementGui.anvilRecipe.left_item", noParams)));
+        leftitem.setPreferredSize(new Dimension(200, 34));
         mainPanel.add(leftitem);
-        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/right_item"), L10N.label("elementgui.anvilrecipe.right_item", new Object[0])));
+        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/anvil/right_item"), L10N.label("elementGui.anvilRecipe.right_item", noParams)));
+        rightitem.setPreferredSize(new Dimension(200, 34));
         mainPanel.add(rightitem);
-        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/right_cost"), L10N.label("elementgui.anvilrecipe.right_item_cost", new Object[0])));
+        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/anvil/right_cost"), L10N.label("elementGui.anvilRecipe.right_item_cost", noParams)));
+        rightcost.setPreferredSize(new Dimension(200, 34));
         mainPanel.add(rightcost);
-        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/xp_cost"), L10N.label("elementgui.anvilrecipe.xp_cost", new Object[0])));
+        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/anvil/xp_cost"), L10N.label("elementGui.anvilRecipe.xp_cost", noParams)));
+        xpcost.setPreferredSize(new Dimension(200, 34));
         mainPanel.add(xpcost);
-        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/output"), L10N.label("elementgui.anvilrecipe.output", new Object[0])));
+        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/anvil/output"), L10N.label("elementGui.anvilRecipe.output", noParams)));
+        output.setPreferredSize(new Dimension(200, 34));
         mainPanel.add(output);
 
         leftitem.setValidator(new MCItemHolderValidator(leftitem));
@@ -64,8 +73,8 @@ public class AnvilRecipeGUI extends ModElementGUI<AnvilRecipe> {
         output.setValidator(new MCItemHolderValidator(output));
         page1group.addValidationElement(output);
 
-        pane1.add(PanelUtils.totalCenterInPanel(mainPanel));
-        addPage(pane1);
+        globalPanel.add(PanelUtils.totalCenterInPanel(mainPanel));
+        addPage(globalPanel);
 
     }
 
@@ -91,8 +100,8 @@ public class AnvilRecipeGUI extends ModElementGUI<AnvilRecipe> {
         return recipe;
     }
 
-    @Override public @Nullable URI contextURL() throws URISyntaxException {
+    @Override
+    public @Nullable URI contextURL() throws URISyntaxException {
         return null;
     }
-
 }

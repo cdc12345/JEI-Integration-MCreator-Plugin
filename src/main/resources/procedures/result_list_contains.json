@@ -15,7 +15,7 @@
   "output": "Boolean",
   "colour": "#5b80a5",
   "mcreator": {
-    "toolbox_id": "just_enough_recipes",
+    "toolbox_id": "jer_result_lists",
     "toolbox_init": [
       "<value name=\"element\"><block type=\"mcitem_all\"><field name=\"value\"></field></block></value>"
     ],

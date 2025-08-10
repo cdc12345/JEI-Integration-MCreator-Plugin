@@ -8,7 +8,7 @@
     {
       "type": "input_value",
       "name": "arraylist",
-      "check": "List"
+      "check": "ArrayList"
     }
   ],
   "inputsInline": true,
@@ -16,7 +16,7 @@
   "nextStatement": null,
   "colour": "#a55ba5",
   "mcreator": {
-    "toolbox_id": "just_enough_recipes",
+    "toolbox_id": "jer_utils",
     "inputs": [
       "resultlist",
       "arraylist"

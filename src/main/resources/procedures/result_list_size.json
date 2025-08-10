@@ -10,7 +10,7 @@
   "output": "Number",
   "colour": "#5b67a5",
   "mcreator": {
-    "toolbox_id": "just_enough_recipes",
+    "toolbox_id": "jer_result_lists",
     "inputs": [
       "list"
     ],
