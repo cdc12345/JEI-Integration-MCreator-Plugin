@@ -3,7 +3,7 @@ Adds jei support to MCreator with custom recipe and recipe types, together with 
 
 # Download
 The plugin can be downloaded here:<br>
-https://mcreator.net/plugin/118595/just-enough-recipes-20252<br>
+The plugin was removed from mcreators website without any warning or any reason<br>
 
 # Credits
 NerdyPuzzle for making the original plugin<br>
