@@ -1,0 +1,1 @@
+This describes whether the slot is an input or an output slot. The "Render" option is for additional textures that can be used.

@@ -1,0 +1,29 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "if",
+      "check": "Boolean"
+    },
+    {
+      "type": "input_value",
+      "name": "then"
+    },
+    {
+      "type": "input_value",
+      "name": "else"
+    }
+  ],
+  "output": null,
+  "inputsInline": true,
+  "colour": "#5b80a5",
+  "mcreator": {
+    "group": "logic02",
+    "toolbox_id": "jei_logic",
+    "inputs": [
+      "if",
+      "then",
+      "else"
+    ]
+  }
+}

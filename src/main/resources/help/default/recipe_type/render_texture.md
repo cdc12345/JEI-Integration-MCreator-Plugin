@@ -1,0 +1,1 @@
+A renderable texture is an additional texture that can be rendered in the JEI recipe. This texture that be static or animated. You can set that under the "Render GUI" section.

@@ -1,0 +1,72 @@
+{
+  "args0": [
+    {
+      "type": "field_dropdown",
+      "name": "type",
+      "options": [
+        [ "Item", "ItemStack" ],
+        [ "Fluid", "FluidStack" ]
+      ]
+    },
+    {
+      "type": "field_lowercase_input",
+      "name": "name",
+      "text": "name"
+    },
+    {
+      "type": "field_data_list_selector",
+      "name": "recipe",
+      "datalist": "recipes",
+      "customEntryProviders": "recipe_type"
+    }
+  ],
+  "mutator": "ingredient_mutator",
+  "output": "Number",
+  "colour": "#5b67a5",
+  "mcreator": {
+    "group": 1,
+    "toolbox_id": "jei_utils",
+    "toolbox_init": [
+      "<mutation inputs=\"1\"></mutation>"
+    ],
+    "fields": [
+      "name",
+      "type",
+      "recipe"
+    ],
+    "repeating_inputs": [
+      {
+        "name": "entry"
+      }
+    ],
+    "repeating_fields": [
+      {
+        "name": "type",
+        "field_definition": {
+          "type": "field_dropdown"
+        }
+      },
+      {
+        "name": "name",
+        "field_definition": {
+          "type": "field_input"
+        }
+      },
+      {
+        "name": "consume",
+        "field_definition": {
+          "type": "field_checkbox"
+        }
+      }
+    ],
+    "dependencies": [
+      {
+        "name": "world",
+        "type": "world"
+      }
+    ],
+    "required_apis": [
+      "jei"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "in1",
+      "check": "Number"
+    },
+    {
+      "type": "field_dropdown",
+      "name": "compare",
+      "options": [
+        [ "=", "==" ],
+        [ "\u2260", "!=" ],
+        [ "<", "<" ],
+        [ "\u2264", "<=" ],
+        [ ">", ">" ],
+        [ "\u2265", ">=" ]
+      ]
+    },
+    {
+      "type": "input_value",
+      "name": "in2",
+      "check": "Number"
+    }
+  ],
+  "output": "Boolean",
+  "inputsInline": true,
+  "colour": "#5b67a5",
+  "mcreator": {
+    "group": "logic06",
+    "toolbox_id": "jei_logic",
+    "inputs": [
+      "in1",
+      "in2"
+    ],
+    "fields": [
+      "compare"
+    ]
+  }
+}

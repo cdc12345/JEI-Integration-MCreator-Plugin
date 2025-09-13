@@ -1,0 +1,18 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "text",
+      "check": "String"
+    }
+  ],
+  "output": "Number",
+  "colour": "#5b67a5",
+  "mcreator": {
+    "group": "number04",
+    "toolbox_id": "jei_number",
+    "inputs": [
+      "text"
+    ]
+  }
+}

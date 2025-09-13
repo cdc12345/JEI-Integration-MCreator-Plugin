@@ -1,0 +1,44 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "number",
+      "check": "Number"
+    },
+    {
+      "type": "field_dropdown",
+      "name": "operator",
+      "options": [
+        [ "round", "Math.round" ],
+        [ "round up", "Math.ceil" ],
+        [ "round down", "Math.floor" ],
+        [ "square root", "Math.sqrt" ],
+        [ "cube root", "Math.cbrt" ],
+        [ "absolute", "Math.abs" ],
+        [ "signum", "Math.signum" ],
+        [ "ln", "Math.log" ],
+        [ "log10", "Math.log10" ],
+        [ "sin", "Math.sin" ],
+        [ "cos", "Math.cos" ],
+        [ "tan", "Math.tan" ],
+        [ "asin", "Math.asin" ],
+        [ "acos", "Math.acos" ],
+        [ "atan", "Math.atan" ],
+        [ "RAD to DEG", "Math.toDegrees" ],
+        [ "DEG to RAD", "Math.toRadians" ]
+      ]
+    }
+  ],
+  "output": "Number",
+  "colour": "#5b67a5",
+  "mcreator": {
+    "group": "number03",
+    "toolbox_id": "jei_number",
+    "inputs": [
+      "number"
+    ],
+    "fields": [
+      "operator"
+    ]
+  }
+}

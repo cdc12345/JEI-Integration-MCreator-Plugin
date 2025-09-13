@@ -1,0 +1,40 @@
+{
+  "args0": [
+    {
+      "type": "field_dropdown",
+      "name": "type",
+      "options": [
+        [ "Item", "ItemStack" ],
+        [ "Fluid", "FluidStack" ],
+        [ "Logic", "boolean" ],
+        [ "Number", "double" ],
+        [ "Text", "String" ]
+      ]
+    },
+    {
+      "type": "input_value",
+      "name": "list",
+      "check": "OutputList"
+    },
+    {
+      "type": "input_value",
+      "name": "check"
+    }
+  ],
+  "inputsInline": true,
+  "output": "Boolean",
+  "colour": "#5b80a5",
+  "mcreator": {
+    "group": 5,
+    "toolbox_id": "jei_result_lists",
+    "toolbox_init": [
+    ],
+    "inputs": [
+      "list",
+      "check"
+    ],
+    "fields": [
+      "type"
+    ]
+  }
+}

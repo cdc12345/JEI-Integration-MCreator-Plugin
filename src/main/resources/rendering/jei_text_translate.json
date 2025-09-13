@@ -1,0 +1,28 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "key",
+      "check": "String"
+    },
+    {
+      "type": "field_image",
+      "src": "./res/client.png",
+      "width": 8,
+      "height": 24
+    }
+  ],
+  "output": "String",
+  "inputsInline": true,
+  "colour": "#5ba58c",
+  "mcreator": {
+    "group": "text18",
+    "toolbox_id": "jei_text",
+    "toolbox_init": [
+      "<value name=\"key\"><block type=\"jei_text_input\"><field name=\"text\">translation.key.name</field></block></value>"
+    ],
+    "inputs": [
+      "key"
+    ]
+  }
+}

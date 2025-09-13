@@ -1,0 +1,48 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "in1",
+      "check": "Number"
+    },
+    {
+      "type": "field_dropdown",
+      "name": "operator",
+      "options": [
+        [ "+", "+" ],
+        [ "-", "-" ],
+        [ "*", "*" ],
+        [ "/", "double/" ],
+        [ "/ (programmer)", "/" ],
+        [ "^", "Math.pow" ],
+        [ "MOD", "%" ],
+        [ "Bitwise AND", "&" ],
+        [ "Bitwise OR", "|" ],
+        [ "Bitwise XOR", "^" ],
+        [ "Min", "Math.min" ],
+        [ "Max", "Math.max" ],
+        [ "hypot", "Math.hypot" ],
+        [ "atan2", "Math.atan2" ]
+      ]
+    },
+    {
+      "type": "input_value",
+      "name": "in2",
+      "check": "Number"
+    }
+  ],
+  "output": "Number",
+  "inputsInline": true,
+  "colour": "#5b67a5",
+  "mcreator": {
+    "group": "number02",
+    "toolbox_id": "jei_number",
+    "inputs": [
+      "in1",
+      "in2"
+    ],
+    "fields": [
+      "operator"
+    ]
+  }
+}

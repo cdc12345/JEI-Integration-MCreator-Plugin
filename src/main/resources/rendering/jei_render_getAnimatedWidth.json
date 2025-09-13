@@ -1,0 +1,29 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "duration",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "width",
+      "check": "Number"
+    }
+  ],
+  "output": "Number",
+  "inputsInline": true,
+  "colour": "#67a55b",
+  "mcreator": {
+    "group": "render04",
+    "toolbox_id": "jei_category_rendering",
+    "toolbox_init": [
+      "<value name=\"duration\"><block type=\"jei_number_input\"><field name=\"number\">0</field></block></value>",
+      "<value name=\"width\"><block type=\"jei_number_input\"><field name=\"number\">0</field></block></value>"
+    ],
+    "inputs": [
+      "duration",
+      "width"
+    ]
+  }
+}

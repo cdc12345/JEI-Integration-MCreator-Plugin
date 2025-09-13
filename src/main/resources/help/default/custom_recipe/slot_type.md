@@ -1,0 +1,1 @@
+The type describes what the slot holds and can either be an item, a fluid, logic, a number or text.

@@ -1,0 +1,21 @@
+global_templates:
+  - template: recipe_type/jeiutils.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/utils/JEIUtils.java"
+  - template: recipe_type/sizedingredient.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/utils/SizedIngredient.java"
+  - template: recipe_type/type_registry.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameRecipeTypes.java"
+  - template: recipe_type/jei_plugin.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameJeiPlugin.java"
+    condition: ${settings.getMCreatorDependenciesRaw()?seq_contains("jei")}
+
+templates:
+  - template: recipe_type/recipe.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/recipe/@NAMERecipe.java"
+  - template: recipe_type/jei_category.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/integration/jei/@NAMEJeiCategory.java"
+    condition: ${settings.getMCreatorDependenciesRaw()?seq_contains("jei")}
+
+localizationkeys:
+  - key: jei.@modid.@registryname
+    mapto: getTitle()

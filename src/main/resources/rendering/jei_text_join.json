@@ -1,0 +1,26 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "text"
+    }
+  ],
+  "mutator": "text_mutator",
+  "output": "String",
+  "colour": "#5ba58c",
+  "mcreator": {
+    "group": "text02",
+    "toolbox_id": "jei_text",
+    "toolbox_init": [
+      "<mutation inputs=\"1\"></mutation>"
+    ],
+    "inputs": [
+      "text"
+    ],
+    "repeating_inputs": [
+      {
+        "name": "entry"
+      }
+    ]
+  }
+}

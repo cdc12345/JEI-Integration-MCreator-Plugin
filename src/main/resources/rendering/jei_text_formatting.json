@@ -1,0 +1,28 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "number",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "format",
+      "check": "String"
+    }
+  ],
+  "output": "String",
+  "inputsInline": true,
+  "colour": "#5ba58c",
+  "mcreator": {
+    "group": "text17",
+    "toolbox_id": "jei_text",
+    "toolbox_init": [
+      "<value name=\"format\"><block type=\"jei_text_input\"><field name=\"text\">#,###</field></block></value>"
+    ],
+    "inputs": [
+      "number",
+      "format"
+    ]
+  }
+}

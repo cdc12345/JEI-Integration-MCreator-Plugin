@@ -1,0 +1,53 @@
+{
+  "args0": [
+    {
+      "type": "field_dropdown",
+      "name": "type",
+      "options": [
+        [ "Item", "ItemStack" ],
+        [ "Fluid", "FluidStack" ],
+        [ "Logic", "boolean" ],
+        [ "Number", "double" ],
+        [ "Text", "String" ]
+      ]
+    },
+    {
+      "type": "input_value",
+      "name": "list",
+      "check": "OutputList"
+    },
+    {
+      "type": "input_value",
+      "name": "iterator"
+    },
+    {
+      "type": "input_statement",
+      "name": "foreach"
+    }
+  ],
+  "extensions": [
+    "is_custom_loop"
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": "#a55ba5",
+  "mcreator": {
+    "group": 7,
+    "toolbox_id": "jei_result_lists",
+    "toolbox_init": [
+      "<value name=\"iterator\"><block deletable=\"false\" movable=\"false\" enabled=\"false\" type=\"jei_list_listIterator\"></block></value>"
+    ],
+    "inputs": [
+      "list"
+    ],
+    "fields": [
+      "type"
+    ],
+    "statements": [
+      {
+        "name": "foreach"
+      }
+    ]
+  }
+}

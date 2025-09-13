@@ -1,0 +1,43 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "xPos",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "yPos",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "text",
+      "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "shadow",
+      "check": "Boolean"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": "#67a55b",
+  "mcreator": {
+    "group": "render01",
+    "toolbox_id": "jei_category_rendering",
+    "toolbox_init": [
+      "<value name=\"xPos\"><block type=\"jei_number_input\"><field name=\"number\">0</field></block></value>",
+      "<value name=\"yPos\"><block type=\"jei_number_input\"><field name=\"number\">0</field></block></value>",
+      "<value name=\"shadow\"><block type=\"jei_logic_input\"></block></value>"
+    ],
+    "inputs": [
+      "xPos",
+      "yPos",
+      "text",
+      "shadow"
+    ]
+  }
+}

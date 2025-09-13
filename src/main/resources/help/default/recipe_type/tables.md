@@ -1,0 +1,1 @@
+The recipe blocks are displayed at the side of a JEI category and typically represent which blocks can process the shown recipes.

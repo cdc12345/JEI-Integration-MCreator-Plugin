@@ -1,0 +1,25 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "text",
+      "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "start",
+      "check": "String"
+    }
+  ],
+  "output": "Boolean",
+  "inputsInline": true,
+  "colour": "#5b80a5",
+  "mcreator": {
+    "group": "text12",
+    "toolbox_id": "jei_text",
+    "inputs": [
+      "text",
+      "start"
+    ]
+  }
+}

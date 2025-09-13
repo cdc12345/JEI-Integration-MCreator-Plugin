@@ -1,0 +1,1 @@
+The title is the title of the JEI category.

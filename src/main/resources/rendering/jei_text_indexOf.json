@@ -1,0 +1,34 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "text",
+      "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "char",
+      "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "start",
+      "check": "Number"
+    }
+  ],
+  "output": "Number",
+  "inputsInline": true,
+  "colour": "#5b67a5",
+  "mcreator": {
+    "group": "text04",
+    "toolbox_id": "jei_text",
+    "toolbox_init": [
+      "<value name=\"start\"><block type=\"jei_number_input\"><field name=\"number\">0</field></block></value>"
+    ],
+    "inputs": [
+      "text",
+      "char",
+      "start"
+    ]
+  }
+}

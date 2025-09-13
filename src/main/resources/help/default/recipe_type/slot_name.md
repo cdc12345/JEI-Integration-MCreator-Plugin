@@ -1,0 +1,1 @@
+The slot name is a unique name for each slot and is used as a key for recipes.

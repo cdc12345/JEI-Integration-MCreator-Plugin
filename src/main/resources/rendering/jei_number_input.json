@@ -1,0 +1,18 @@
+{
+  "args0": [
+    {
+      "type": "field_number",
+      "name": "number",
+      "value": "0"
+    }
+  ],
+  "output": "Number",
+  "colour": "#5b67a5",
+  "mcreator": {
+    "group": "number01",
+    "toolbox_id": "jei_number",
+    "fields": [
+      "number"
+    ]
+  }
+}

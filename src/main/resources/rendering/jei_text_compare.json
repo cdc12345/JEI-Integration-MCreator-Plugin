@@ -1,0 +1,36 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "in1",
+      "check": "String"
+    },
+    {
+      "type": "field_dropdown",
+      "name": "compare",
+      "options": [
+        [ "=", "null" ],
+        [ "\u2260", "!null" ]
+      ]
+    },
+    {
+      "type": "input_value",
+      "name": "in2",
+      "check": "String"
+    }
+  ],
+  "output": "Boolean",
+  "inputsInline": true,
+  "colour": "#5ba58c",
+  "mcreator": {
+    "group": "logic07",
+    "toolbox_id": "jei_logic",
+    "inputs": [
+      "in1",
+      "in2"
+    ],
+    "fields": [
+      "compare"
+    ]
+  }
+}

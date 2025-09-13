@@ -1,0 +1,49 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "IF0",
+      "check": "Boolean"
+    },
+    {
+      "type": "input_statement",
+      "name": "DO0"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": "#5b80a5",
+  "mutator": "if_mutator",
+  "mcreator": {
+    "group": "logic01",
+    "toolbox_id": "jei_logic",
+    "inputs": [
+      "IF0"
+    ],
+    "statements": [
+      {
+        "name": "DO0",
+        "disable_local_variables": false
+      }
+    ],
+    "repeating_inputs": [
+      {
+        "name": "IF"
+      }
+    ],
+    "repeating_statements": [
+      {
+        "name": "DO",
+        "field_definition": {
+          "type": "input_statement"
+        }
+      },
+      {
+        "name": "ELSE",
+        "field_definition": {
+          "type": "input_statement"
+        }
+      }
+    ]
+  }
+}

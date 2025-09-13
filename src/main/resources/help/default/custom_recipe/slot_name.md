@@ -1,0 +1,1 @@
+The slot name that is set in the recipe type.

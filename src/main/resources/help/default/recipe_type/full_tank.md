@@ -1,0 +1,1 @@
+This option controls whether the tank in the JEI recipe is completely filled to the top or has a fill level corresponding to the size of the fluid tank.

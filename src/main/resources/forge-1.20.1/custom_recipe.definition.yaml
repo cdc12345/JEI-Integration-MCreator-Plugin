@@ -1,0 +1,4 @@
+templates:
+  - template: custom_recipe/recipe.json.ftl
+    writer: json
+    name: "@MODDATAROOT/recipes/@registryname.json"

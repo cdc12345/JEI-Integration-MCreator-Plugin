@@ -1,0 +1,1 @@
+Enable this to add clickable areas inside GUIs that will show the "Show Recipes" tooltip and link to this JEI category/recipe type.<br>

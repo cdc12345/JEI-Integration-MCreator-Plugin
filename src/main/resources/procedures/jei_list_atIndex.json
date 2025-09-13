@@ -1,0 +1,42 @@
+{
+  "args0": [
+    {
+      "type": "field_dropdown",
+      "name": "type",
+      "options": [
+        [ "Item", "ItemStack" ],
+        [ "Fluid", "FluidStack" ],
+        [ "Logic", "boolean" ],
+        [ "Number", "double" ],
+        [ "Text", "String" ]
+      ]
+    },
+    {
+      "type": "input_value",
+      "name": "list",
+      "check": "OutputList"
+    },
+    {
+      "type": "input_value",
+      "name": "index",
+      "check": "Number"
+    }
+  ],
+  "inputsInline": true,
+  "output": null,
+  "colour": "#a55ba5",
+  "mcreator": {
+    "group": 4,
+    "toolbox_id": "jei_result_lists",
+    "toolbox_init": [
+      "<value name=\"index\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value>"
+    ],
+    "inputs": [
+      "list",
+      "index"
+    ],
+    "fields": [
+      "type"
+    ]
+  }
+}

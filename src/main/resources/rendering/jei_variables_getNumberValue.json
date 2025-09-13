@@ -1,0 +1,27 @@
+{
+  "args0": [
+    {
+      "type": "field_dropdown",
+      "name": "io",
+      "options": [
+        [ "input", "Input" ],
+        [ "output", "Output" ]
+      ]
+    },
+    {
+      "type": "field_lowercase_input",
+      "name": "name",
+      "text": "name"
+    }
+  ],
+  "output": "Number",
+  "colour": "#5b67a5",
+  "mcreator": {
+    "group": "data",
+    "toolbox_id": "jei_category_variables",
+    "fields": [
+      "io",
+      "name"
+    ]
+  }
+}

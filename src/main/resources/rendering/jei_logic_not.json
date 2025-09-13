@@ -1,0 +1,18 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "not",
+      "check": "Boolean"
+    }
+  ],
+  "output": "Boolean",
+  "colour": "#5b80a5",
+  "mcreator": {
+    "group": "logic03",
+    "toolbox_id": "jei_logic",
+    "inputs": [
+      "not"
+    ]
+  }
+}

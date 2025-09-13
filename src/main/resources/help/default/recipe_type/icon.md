@@ -1,0 +1,1 @@
+The displayed icon is the icon of the JEI category.
