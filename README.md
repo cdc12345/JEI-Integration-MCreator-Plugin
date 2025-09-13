@@ -3,7 +3,7 @@ Adds jei support to MCreator with custom recipe and recipe types, together with 
 
 # Download
 The plugin can be downloaded here:<br>
-<br>
+https://mcreator.net/plugin/119445/jei-integration<br>
 
 # Wiki
 A wiki to this plugin is planned.<br>
