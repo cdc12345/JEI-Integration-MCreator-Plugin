@@ -1,3 +1,0 @@
-(
-    ${input$list}.size()
-)
