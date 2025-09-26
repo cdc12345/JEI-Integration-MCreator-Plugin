@@ -9,10 +9,18 @@ package ${package}.recipe;
     <#if slot.type == "Item">
         <#if slot.io == "Input">
             <#assign pureIO += ["${slot.name}${slot.type}${slot.io}"]>
-            <#if slot.optional>
-                <#assign varsIO += ["Optional<SizedIngredient> ${slot.name}${slot.type}${slot.io}"]>
+            <#if slot.singleItem>
+                <#if slot.optional>
+                    <#assign varsIO += ["Optional<Ingredient> ${slot.name}${slot.type}${slot.io}"]>
+                <#else>
+                    <#assign varsIO += ["Ingredient ${slot.name}${slot.type}${slot.io}"]>
+                </#if>
             <#else>
-                <#assign varsIO += ["SizedIngredient ${slot.name}${slot.type}${slot.io}"]>
+                <#if slot.optional>
+                    <#assign varsIO += ["Optional<SizedIngredient> ${slot.name}${slot.type}${slot.io}"]>
+                <#else>
+                    <#assign varsIO += ["SizedIngredient ${slot.name}${slot.type}${slot.io}"]>
+                </#if>
             </#if>
         <#elseif slot.io == "Output">
             <#assign pureIO += ["${slot.name}${slot.type}${slot.io}"]>
@@ -121,8 +129,10 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
 	public boolean validate(Object given, Object recipe) {
 		// Test Item
 		if(given instanceof ItemStack item) {
-			if(recipe instanceof SizedIngredient ingre) {
-				return ingre.test(item);
+			if(recipe instanceof SizedIngredient sIngre) {
+				return sIngre.test(item);
+			} else if(recipe instanceof Ingredient ingre) {
+			    return ingre.test(item);
 			} else if(recipe instanceof Optional<?> opt) {
 				if(item.isEmpty()) {
 					return opt.isEmpty();
@@ -130,8 +140,10 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
 
                 if(opt.isPresent()) {
 				    Object o = opt.get();
-				    if(o instanceof SizedIngredient ingred) {
-					    return ingred.test(item);
+				    if(o instanceof SizedIngredient sIngred) {
+					    return sIngred.test(item);
+				    } else if(o instanceof Ingredient ingred) {
+				        return ingred.test(item);
 				    }
                 }
 
@@ -177,6 +189,37 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
 		return false;
 	}
 
+    // JeiI: returns the recipe ingredient amount
+	public int amount(Object recipe) {
+        if(recipe instanceof SizedIngredient sized) {
+            return sized.count();
+        } else if(recipe instanceof Ingredient) {
+            return 1;
+        } else if(recipe instanceof Optional<?> opt) {
+            if(opt.isPresent()) {
+                Object o = opt.get();
+                if(o instanceof SizedIngredient sizedO) {
+                    return sizedO.count();
+                } else if(o instanceof Ingredient) {
+                    return 1;
+                }
+            }
+        }
+
+        if(recipe instanceof SizedFluidIngredient sizedF) {
+            return sizedF.amount();
+        } else if(recipe instanceof Optional<?> opt) {
+            if(opt.isPresent()) {
+                Object o = opt.get();
+                if(o instanceof SizedFluidIngredient sizedFO) {
+                    return sizedFO.amount();
+                }
+            }
+        }
+
+        return 0;
+	}
+
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
         return Serializer.INSTANCE;
@@ -202,11 +245,20 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
                 <#list data.slotList as slot>
                     <#if slot.type == "Item">
                         <#if slot.io == "Input">
-                            <#if slot.optional>
-                                <#assign ingre += ["SizedIngredient.FLAT_CODEC.optionalFieldOf(\"${slot.name}\").forGetter(${name}Recipe::${slot.name}${slot.type}${slot.io})"]>
+                            <#if slot.singleItem>
+                                <#if slot.optional>
+                                    <#assign ingre += ["Ingredient.CODEC.optionalFieldOf(\"${slot.name}\").forGetter(${name}Recipe::${slot.name}${slot.type}${slot.io})"]>
+                                <#else>
+                                    <#assign ingre += ["Ingredient.CODEC.fieldOf(\"${slot.name}\").forGetter(${name}Recipe::${slot.name}${slot.type}${slot.io})"]>
+                                </#if>
                             <#else>
-                                <#assign ingre += ["SizedIngredient.FLAT_CODEC.fieldOf(\"${slot.name}\").forGetter(${name}Recipe::${slot.name}${slot.type}${slot.io})"]>
+                                <#if slot.optional>
+                                    <#assign ingre += ["SizedIngredient.FLAT_CODEC.optionalFieldOf(\"${slot.name}\").forGetter(${name}Recipe::${slot.name}${slot.type}${slot.io})"]>
+                                <#else>
+                                    <#assign ingre += ["SizedIngredient.FLAT_CODEC.fieldOf(\"${slot.name}\").forGetter(${name}Recipe::${slot.name}${slot.type}${slot.io})"]>
+                                </#if>
                             </#if>
+
                         <#elseif slot.io == "Output">
                             <#assign ingre += ["ItemStack.CODEC.fieldOf(\"${slot.name}\").forGetter(${name}Recipe::${slot.name}${slot.type}${slot.io})"]>
                         </#if>
@@ -264,10 +316,18 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
             <#list data.slotList as slot>
                 <#if slot.type == "Item">
                     <#if slot.io == "Input">
-                        <#if slot.optional>
-                            Optional<SizedIngredient> ${slot.name}${slot.type}${slot.io} = ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC).decode(buffer);
+                        <#if slot.singleItem>
+                            <#if slot.optional>
+                                Optional<Ingredient> ${slot.name}${slot.type}${slot.io} = ByteBufCodecs.optional(Ingredient.CONTENTS_STREAM_CODEC).decode(buffer);
+                            <#else>
+                                Ingredient ${slot.name}${slot.type}${slot.io} = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+                            </#if>
                         <#else>
-                            SizedIngredient ${slot.name}${slot.type}${slot.io} = SizedIngredient.STREAM_CODEC.decode(buffer);
+                            <#if slot.optional>
+                                Optional<SizedIngredient> ${slot.name}${slot.type}${slot.io} = ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC).decode(buffer);
+                            <#else>
+                                SizedIngredient ${slot.name}${slot.type}${slot.io} = SizedIngredient.STREAM_CODEC.decode(buffer);
+                            </#if>
                         </#if>
                     <#elseif slot.io == "Output">
                         ItemStack ${slot.name}${slot.type}${slot.io} = ItemStack.STREAM_CODEC.decode(buffer);
@@ -297,10 +357,18 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
             <#list data.slotList as slot>
                 <#if slot.type == "Item">
                     <#if slot.io == "Input">
-                        <#if slot.optional>
-                            ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC).encode(buffer, recipe.${slot.name}${slot.type}${slot.io}());
+                        <#if slot.singleItem>
+                            <#if slot.optional>
+                                ByteBufCodecs.optional(Ingredient.CONTENTS_STREAM_CODEC).encode(buffer, recipe.${slot.name}${slot.type}${slot.io}());
+                            <#else>
+                                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.${slot.name}${slot.type}${slot.io}());
+                            </#if>
                         <#else>
-                            SizedIngredient.STREAM_CODEC.encode(buffer, recipe.${slot.name}${slot.type}${slot.io}());
+                            <#if slot.optional>
+                                ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC).encode(buffer, recipe.${slot.name}${slot.type}${slot.io}());
+                            <#else>
+                                SizedIngredient.STREAM_CODEC.encode(buffer, recipe.${slot.name}${slot.type}${slot.io}());
+                            </#if>
                         </#if>
                     <#elseif slot.io == "Output">
                         ItemStack.STREAM_CODEC.encode(buffer, recipe.${slot.name}${slot.type}${slot.io}());

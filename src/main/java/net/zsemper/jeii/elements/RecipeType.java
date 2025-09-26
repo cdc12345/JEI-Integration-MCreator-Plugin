@@ -18,10 +18,13 @@ import net.mcreator.workspace.references.TextureReference;
 import net.zsemper.jeii.utils.Constants;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class RecipeType extends GeneratableElement {
+    public String name;
     // JEI Texture
     @TextureReference(TextureType.SCREEN)
     public TextureHolder texture;
@@ -48,9 +51,6 @@ public class RecipeType extends GeneratableElement {
     public boolean enableClickArea;
     public List<ClickListEntry> clickAreaList;
 
-
-
-
     public static class SlotListEntry {
         public SlotListEntry() {}
 
@@ -59,6 +59,7 @@ public class RecipeType extends GeneratableElement {
         public String name;
         public int x;
         public int y;
+        public boolean singleItem;
         public int height;
         public boolean fullTank;
         public int tankCapacity;
@@ -86,6 +87,16 @@ public class RecipeType extends GeneratableElement {
 
     public RecipeType(ModElement element) {
         super(element);
+    }
+
+    public Map<String, Boolean> getSingleIngredients() {
+        Map<String, Boolean> holder = new HashMap<>();
+        for (SlotListEntry entry : slotList) {
+            if (entry.type.equals("Input")) {
+                holder.put(entry.name, entry.singleItem);
+            }
+        }
+        return holder;
     }
 
     public String getTitle() {

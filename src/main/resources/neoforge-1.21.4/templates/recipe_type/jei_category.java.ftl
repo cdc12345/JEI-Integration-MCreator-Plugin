@@ -99,6 +99,10 @@ public class ${name}JeiCategory implements IRecipeCategory<${name}Recipe> {
             for(int i = 0; i < sized.ingredient().getValues().size(); i++) {
                 stacks.add(new ItemStack(sized.ingredient().getValues().get(i), sized.count()));
             }
+        } else if(in instanceof Ingredient ingre) {
+            for(int i = 0; i < ingre.getValues().size(); i++) {
+                stacks.add(new ItemStack(ingre.getValues().get(i)));
+            }
         } else if(in instanceof Optional<?> opt) {
             if(opt.isPresent()) {
                 Object o = opt.get();

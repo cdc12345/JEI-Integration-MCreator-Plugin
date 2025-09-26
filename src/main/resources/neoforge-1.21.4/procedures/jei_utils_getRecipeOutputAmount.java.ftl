@@ -97,9 +97,9 @@
 
                             <#if consumeArray[i] == "TRUE">
                                 <#if typeArray[i] == "MCItem">
-                                    ${nameArray[i]}ItemInput.shrink(recipe.${nameArray[i]}ItemInput().count());
+                                    ${nameArray[i]}ItemInput.shrink(recipe.amount(recipe.${nameArray[i]}ItemInput()));
                                 <#elseif typeArray[i] == "FluidStack">
-                                    ${nameArray[i]}FluidInput.shrink(recipe.${nameArray[i]}FluidInput().getAmount());
+                                    ${nameArray[i]}FluidInput.shrink(recipe.amount(recipe.${nameArray[i]}FluidInput().getAmount()));
                                 </#if>
                             </#if>
                         </#list>

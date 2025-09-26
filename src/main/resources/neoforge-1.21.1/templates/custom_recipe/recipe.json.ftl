@@ -1,7 +1,8 @@
 <#include "../mcitems.ftl">
+
 <#compress>
 {
-    "type": "${modid}:${data.category}",
+    "type": "${modid}:${data.recipeType}",
     <#list data.inputs as input>
         <#if input.type == "Item">
             "${input.name}": {

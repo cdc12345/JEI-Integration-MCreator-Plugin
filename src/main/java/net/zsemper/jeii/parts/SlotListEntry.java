@@ -23,6 +23,7 @@ public class SlotListEntry extends JSimpleListEntry<RecipeType.SlotListEntry> {
     private final VTextField name = new VTextField();
     private final JSpinner x = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
     private final JSpinner y = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
+    private final JCheckBox single = new JCheckBox();
     private final JSpinner height = new JSpinner(new SpinnerNumberModel(16, 1, 1000, 1));
     private final JCheckBox fullTank = new JCheckBox();
     private final JSpinner tankCapacity = new JSpinner(new SpinnerNumberModel(1, 1, null, 1));
@@ -35,6 +36,7 @@ public class SlotListEntry extends JSimpleListEntry<RecipeType.SlotListEntry> {
     private final JComponent typeComp;
     private final JComponent xComp;
     private final JComponent yComp;
+    private final JComponent singleComp;
     private final JComponent heightComp;
     private final JComponent fullTankComp;
     private final JComponent tankCapacityComp;
@@ -48,6 +50,7 @@ public class SlotListEntry extends JSimpleListEntry<RecipeType.SlotListEntry> {
         typeComp = HelpUtils.wrapWithHelpButton(help.withEntry("recipe_type/slot_type"), L10N.label("elementGui.slots.type", Constants.NO_PARAMS));
         xComp = new JLabel(Constants.Translatable.X);
         yComp = new JLabel(Constants.Translatable.Y);
+        singleComp = HelpUtils.wrapWithHelpButton(help.withEntry("recipe_type/single_item"), L10N.label("elementGui.slots.single", Constants.NO_PARAMS));
         heightComp = HelpUtils.wrapWithHelpButton(help.withEntry("recipe_type/tank_height"), new JLabel(Constants.Translatable.HEIGHT));
         fullTankComp = HelpUtils.wrapWithHelpButton(help.withEntry("recipe_type/full_tank"), L10N.label("elementGui.slots.tank", Constants.NO_PARAMS));
         tankCapacityComp = L10N.label("elementGui.slots.tankCapacity", Constants.NO_PARAMS);
@@ -84,31 +87,10 @@ public class SlotListEntry extends JSimpleListEntry<RecipeType.SlotListEntry> {
         defaultDouble.setPreferredSize(Constants.DIMENSION);
         defaultString.setPreferredSize(Constants.DIMENSION);
 
-        io.addActionListener(e -> {
-            renderSelected(io.getSelectedItem().equals("Render"));
-
-            if (io.getSelectedItem().equals("Output")) {
-                optional.setSelected(false);
-                optional.setEnabled(false);
-            } else {
-                optional.setEnabled(true);
-            }
-        });
-
-        type.addActionListener(e -> {
-            triggerVarSelection();
-
-            fluidSelected(type.getSelectedItem().equals("Fluid"));
-        });
-
-        optional.addActionListener(e -> {
-            triggerVarSelection();
-        });
-
-        fullTank.addActionListener(e -> {
-            tankCapacity.setEnabled(fullTank.isSelected());
-        });
-
+        io.addActionListener(e -> setIOSelected((String) io.getSelectedItem()));
+        type.addActionListener(e -> setTypeSelected((String) type.getSelectedItem()));
+        optional.addActionListener(e -> setOptional(optional.isSelected()));
+        fullTank.addActionListener(e -> tankCapacity.setEnabled(fullTank.isSelected()));
         name.getDocument().addDocumentListener(GuiUtils.FORCE_LOWER_CASE(name));
 
         this.line.add(HelpUtils.wrapWithHelpButton(help.withEntry("recipe_type/slot_io"), L10N.label("elementGui.slots.io", Constants.NO_PARAMS)));
@@ -121,6 +103,8 @@ public class SlotListEntry extends JSimpleListEntry<RecipeType.SlotListEntry> {
         this.line.add(x);
         this.line.add(yComp);
         this.line.add(y);
+        this.line.add(singleComp);
+        this.line.add(single);
         this.line.add(heightComp);
         this.line.add(height);
         this.line.add(fullTankComp);
@@ -150,6 +134,8 @@ public class SlotListEntry extends JSimpleListEntry<RecipeType.SlotListEntry> {
         x.setEnabled(enabled);
         y.setEnabled(enabled);
 
+        single.setEnabled(enabled);
+
         height.setEnabled(enabled);
         fullTank.setEnabled(enabled);
 
@@ -163,160 +149,190 @@ public class SlotListEntry extends JSimpleListEntry<RecipeType.SlotListEntry> {
 
     @Override
     public RecipeType.SlotListEntry getEntry() {
-        RecipeType.SlotListEntry entry = new RecipeType.SlotListEntry();
+        RecipeType.SlotListEntry element = new RecipeType.SlotListEntry();
 
-        entry.io = (String) io.getSelectedItem();
-        entry.type = (String) type.getSelectedItem();
-        entry.name = name.getText();
-        entry.x = (int) x.getValue();
-        entry.y =(int) y.getValue();
+        element.io = (String) io.getSelectedItem();
+        element.type = (String) type.getSelectedItem();
+        element.name = name.getText();
+        element.x = (int) x.getValue();
+        element.y =(int) y.getValue();
 
-        entry.height = (int) height.getValue();
-        entry.fullTank = fullTank.isSelected();
-        entry.tankCapacity = (int) tankCapacity.getValue();
+        element.singleItem = single.isSelected();
 
-        entry.optional = optional.isSelected();
-        entry.resource = resource.getTextureHolder();
-        entry.resourceWidth = resource.getTextureHolder().getImage(TextureType.SCREEN).getWidth(null);
-        entry.resourceHeight = resource.getTextureHolder().getImage(TextureType.SCREEN).getHeight(null);
+        element.height = (int) height.getValue();
+        element.fullTank = fullTank.isSelected();
+        element.tankCapacity = (int) tankCapacity.getValue();
+
+        element.optional = optional.isSelected();
+        element.resource = resource.getTextureHolder();
+        element.resourceWidth = resource.getTextureHolder().getImage(TextureType.SCREEN).getWidth(null);
+        element.resourceHeight = resource.getTextureHolder().getImage(TextureType.SCREEN).getHeight(null);
 
         if(defaultBoolean.getSelectedItem().equals("true")) {
-            entry.defaultBoolean = true;
+            element.defaultBoolean = true;
         } else {
-            entry.defaultBoolean = false;
+            element.defaultBoolean = false;
         }
-        entry.defaultDouble = (double) defaultDouble.getValue();
-        entry.defaultString = defaultString.getText();
+        element.defaultDouble = (double) defaultDouble.getValue();
+        element.defaultString = defaultString.getText();
 
-        return entry;
+        return element;
     }
 
     @Override
-    public void setEntry(RecipeType.SlotListEntry entry) {
-        io.setSelectedItem(entry.io);
-        type.setSelectedItem(entry.type);
-        name.setText(entry.name);
-        x.setValue(entry.x);
-        y.setValue(entry.y);
+    public void setEntry(RecipeType.SlotListEntry element) {
+        io.setSelectedItem(element.io);
+        type.setSelectedItem(element.type);
+        name.setText(element.name);
+        x.setValue(element.x);
+        y.setValue(element.y);
 
-        height.setValue(entry.height);
-        fullTank.setSelected(entry.fullTank);
-        tankCapacity.setValue(entry.tankCapacity);
+        single.setSelected(element.singleItem);
 
-        optional.setSelected(entry.optional);
-        resource.setTexture(entry.resource);
+        height.setValue(element.height);
+        fullTank.setSelected(element.fullTank);
+        tankCapacity.setValue(element.tankCapacity);
 
-        if (entry.defaultBoolean) {
+        optional.setSelected(element.optional);
+        resource.setTexture(element.resource);
+
+        if (element.defaultBoolean) {
             defaultBoolean.setSelectedItem("true");
         } else {
             defaultBoolean.setSelectedItem("false");
         }
-        defaultDouble.setValue(entry.defaultDouble);
-        defaultString.setText(entry.defaultString);
-
-        triggerVarSelection();
+        defaultDouble.setValue(element.defaultDouble);
+        defaultString.setText(element.defaultString);
     }
 
-    private void fluidSelected(boolean visible) {
-        height.setVisible(visible);
-        heightComp.setVisible(visible);
-        fullTank.setVisible(visible);
-        fullTankComp.setVisible(visible);
-        tankCapacity.setVisible(visible);
-        tankCapacityComp.setVisible(visible);
-    }
-
-    private void renderSelected(boolean visible) {
-        typeComp.setVisible(!visible);
-        type.setVisible(!visible);
-        xComp.setVisible(!visible);
-        x.setVisible(!visible);
-        yComp.setVisible(!visible);
-        y.setVisible(!visible);
-
-        if (type.getSelectedItem().equals("Fluid")) {
-            height.setVisible(!visible);
-            heightComp.setVisible(!visible);
-            fullTank.setVisible(!visible);
-            fullTank.setVisible(!visible);
-            tankCapacity.setVisible(!visible);
-            tankCapacityComp.setVisible(!visible);
+    private void hideAll(boolean includeType) {
+        if (includeType) {
+            typeComp.setVisible(false);
+            type.setVisible(false);
         }
 
-        optionalComp.setVisible(!visible);
-        optional.setVisible(!visible);
+        xComp.setVisible(false);
+        x.setVisible(false);
+        yComp.setVisible(false);
+        y.setVisible(false);
 
-        defaultComp.setVisible(!visible);
-        if (!visible) {
-            triggerVarSelection();
-        } else {
-            varSelected("not visible");
-        }
+        singleComp.setVisible(false);
+        single.setVisible(false);
 
-        resourceComp.setVisible(visible);
-        resource.setVisible(visible);
+        heightComp.setVisible(false);
+        height.setVisible(false);
+        fullTankComp.setVisible(false);
+        fullTank.setVisible(false);
+        tankCapacityComp.setVisible(false);
+        tankCapacity.setVisible(false);
+
+        optionalComp.setVisible(false);
+        optional.setVisible(false);
+
+        resourceComp.setVisible(false);
+        resource.setVisible(false);
+
+        defaultComp.setVisible(false);
+        defaultBoolean.setVisible(false);
+        defaultDouble.setVisible(false);
+        defaultString.setVisible(false);
     }
 
-    private void triggerVarSelection() {
-        String selected = (String) type.getSelectedItem();
+    private void enableRender() {
+        setInputEnabled(false);
 
-        if (!io.getSelectedItem().equals("Render")) {
-            if (selected.equals("Logic") || selected.equals("Number") || selected.equals("Text")) {
-                x.setVisible(false);
-                xComp.setVisible(false);
-                y.setVisible(false);
-                yComp.setVisible(false);
+        resourceComp.setVisible(true);
+        resource.setVisible(true);
+    }
 
-                height.setVisible(false);
-                height.setVisible(false);
-                fullTank.setVisible(false);
-                fullTankComp.setVisible(false);
-                tankCapacity.setVisible(false);
-                tankCapacityComp.setVisible(false);
-            } else {
-                x.setVisible(true);
-                xComp.setVisible(true);
-                y.setVisible(true);
-                yComp.setVisible(true);
+    private void setIOSelected(@Nullable String io) {
+        hideAll(true);
+
+        switch (io) {
+            case "Input" -> {
+                typeComp.setVisible(true);
+                type.setVisible(true);
+
+                setTypeSelected((String) type.getSelectedItem());
+
+                setInputEnabled(true);
             }
-        }
+            case "Output" -> {
+                typeComp.setVisible(true);
+                type.setVisible(true);
 
-        if (optional.isSelected()) {
-            varSelected(selected);
-        } else {
-            varSelected(null);
+                setTypeSelected((String) type.getSelectedItem());
+
+                setInputEnabled(false);
+            }
+            case "Render" -> enableRender();
+            case null, default -> hideAll(true);
         }
     }
 
-    private void varSelected(@Nullable String type) {
+    private void setTypeSelected(@Nullable String type) {
+        hideAll(false);
+
+        optionalComp.setVisible(true);
+        optional.setVisible(true);
+
         switch (type) {
+            case "Item" -> {
+
+                xComp.setVisible(true);
+                x.setVisible(true);
+                yComp.setVisible(true);
+                y.setVisible(true);
+
+                singleComp.setVisible(true);
+                single.setVisible(true);
+            }
+            case "Fluid" -> {
+                xComp.setVisible(true);
+                x.setVisible(true);
+                yComp.setVisible(true);
+                y.setVisible(true);
+
+                heightComp.setVisible(true);
+                height.setVisible(true);
+                fullTankComp.setVisible(true);
+                fullTank.setVisible(true);
+                tankCapacityComp.setVisible(true);
+                tankCapacity.setVisible(true);
+            }
             case "Logic" -> {
                 defaultComp.setVisible(true);
                 defaultBoolean.setVisible(true);
-                defaultDouble.setVisible(false);
-                defaultString.setVisible(false);
             }
             case "Number" -> {
                 defaultComp.setVisible(true);
-                defaultBoolean.setVisible(false);
                 defaultDouble.setVisible(true);
-                defaultString.setVisible(false);
             }
             case "Text" -> {
                 defaultComp.setVisible(true);
-                defaultBoolean.setVisible(false);
-                defaultDouble.setVisible(false);
                 defaultString.setVisible(true);
             }
-            case null -> {
-                varSelected("null");
-            }
-            default -> {
-                defaultComp.setVisible(false);
-                defaultBoolean.setVisible(false);
-                defaultDouble.setVisible(false);
-                defaultString.setVisible(false);
-            }
+            case null, default -> hideAll(false);
         }
+    }
+
+    private void setOptional(boolean optional) {
+        defaultBoolean.setEnabled(optional);
+        defaultDouble.setEnabled(optional);
+        defaultString.setEnabled(optional);
+    }
+
+    private void setInputEnabled(boolean input) {
+        if (!input) {
+            optional.setSelected(false);
+            single.setSelected(false);
+        }
+
+        optional.setEnabled(input);
+        single.setEnabled(input);
+
+        defaultBoolean.setEnabled(input);
+        defaultDouble.setEnabled(input);
+        defaultString.setEnabled(input);
     }
 }

@@ -296,23 +296,11 @@ public class RecipeTypeGUI extends ModElementGUI<RecipeType> implements IBlockly
         }
     }
 
-    protected AggregatedValidationResult validatePage(int page) {
-        Image img = texture.getTextureHolder().getImage(TextureType.SCREEN);
-        if (Constants.JEI(mcreator)) {
-            if (texture.getTextureHolder().isEmpty() && page == 0) {
-                return new AggregatedValidationResult.FAIL(L10N.t("elementGui.recipeType.errorNoTexture", Constants.NO_PARAMS));
-            }
-            if ((img.getWidth(null) != 256 || img.getHeight(null) != 256) && page == 0) {
-                return new AggregatedValidationResult.FAIL(L10N.t("elementGui.recipeType.errorTextureSize", Constants.NO_PARAMS));
-            }
-        }
-
-        return new AggregatedValidationResult.PASS();
-    }
-
     @Override
     public RecipeType getElementFromGUI() {
         RecipeType element = new RecipeType(modElement);
+        element.name = modElement.getName();
+
         element.texture = texture.getTextureHolder();
         element.x = (int) x.getValue();
         element.y = (int) y.getValue();

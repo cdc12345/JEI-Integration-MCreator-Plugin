@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Recipe extends GeneratableElement {
     public String category;
+    public String recipeType;
     public List<RecipeListEntry> inputs;
     public List<RecipeListEntry> outputs;
 
@@ -22,6 +23,7 @@ public class Recipe extends GeneratableElement {
         @ModElementReference
         public MItemBlock itemId;
         public int itemAmount;
+        public boolean singleIngredient = false;
         // Fluid
         @ModElementReference
         public Fluid fluidId;

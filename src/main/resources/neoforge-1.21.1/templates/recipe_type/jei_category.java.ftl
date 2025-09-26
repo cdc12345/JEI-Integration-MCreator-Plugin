@@ -96,11 +96,15 @@ public class ${name}JeiCategory implements IRecipeCategory<${name}Recipe> {
     private List<ItemStack> getItemStacks(Object in) {
         if(in instanceof SizedIngredient sized) {
             return Arrays.asList(sized.getItems());
+        } else if(in instanceof Ingredient ingre) {
+            return Arrays.asList(ingre.getItems());
         } else if(in instanceof Optional<?> opt) {
             if(opt.isPresent()) {
                 Object o = opt.get();
                 if(o instanceof SizedIngredient sizedO) {
                     return Arrays.asList(sizedO.getItems());
+                } else if(o instanceof Ingredient ingreO) {
+                    return Arrays.asList(ingreO.getItems());
                 }
             }
         }

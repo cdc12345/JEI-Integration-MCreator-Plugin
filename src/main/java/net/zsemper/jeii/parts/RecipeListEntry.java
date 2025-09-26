@@ -140,81 +140,79 @@ public class RecipeListEntry extends JSimpleListEntry<Recipe.RecipeListEntry> {
 
     @Override
     public Recipe.RecipeListEntry getEntry() {
-        Recipe.RecipeListEntry entry = new Recipe.RecipeListEntry(listType);
+        Recipe.RecipeListEntry element = new Recipe.RecipeListEntry(listType);
 
-        entry.type = (String) type.getSelectedItem();
-        entry.name = name.getText();
+        element.type = (String) type.getSelectedItem();
+        element.name = (String) name.getText();
 
         if (itemId.containsItem()) {
-            entry.itemId = itemId.getBlock();
+            element.itemId = itemId.getBlock();
         }
-        entry.itemAmount = (int) itemAmount.getValue();
+        element.itemAmount = (int) itemAmount.getValue();
         if (!fluidId.getListElements().isEmpty()) {
-            entry.fluidId = fluidId.getListElements().getFirst();
+            element.fluidId = fluidId.getListElements().getFirst();
         }
-        entry.fluidAmount = (int) fluidAmount.getValue();
+        element.fluidAmount = (int) fluidAmount.getValue();
 
-        entry.logic = logic.getSelectedItem().equals("true");
-        entry.number = (double) number.getValue();
-        entry.text = text.getText();
+        element.logic = logic.getSelectedItem().equals("true");
+        element.number = (double) number.getValue();
+        element.text = text.getText();
 
-        return entry;
+        return element;
     }
 
     @Override
-    public void setEntry(Recipe.RecipeListEntry entry) {
-        type.setSelectedItem(entry.type);
-        name.setText(entry.name);
+    public void setEntry(Recipe.RecipeListEntry element) {
+        type.setSelectedItem(element.type);
+        name.setText(element.name);
 
-        if (entry.itemId != null) {
-            itemId.setBlock(entry.itemId);
+        if (element.itemId != null) {
+            itemId.setBlock(element.itemId);
         }
-        itemAmount.setValue(entry.itemAmount);
-        if (entry.fluidId != null) {
-            fluidId.setListElements(List.of(entry.fluidId));
+        itemAmount.setValue(element.itemAmount);
+        if (element.fluidId != null) {
+            fluidId.setListElements(List.of(element.fluidId));
         }
-        fluidAmount.setValue(entry.fluidAmount);
+        fluidAmount.setValue(element.fluidAmount);
 
-        if (entry.logic) {
+        if (element.logic) {
             logic.setSelectedItem("true");
         } else {
             logic.setSelectedItem("false");
         }
-        number.setValue(entry.number);
-        text.setText(entry.text);
+        number.setValue(element.number);
+        text.setText(element.text);
     }
 
     private void changeType() {
+        hideAll();
+
         switch ((String) type.getSelectedItem()) {
             case "Item" -> {
-                hideAll();
                 itemId.setVisible(true);
                 itemAmount.setVisible(true);
                 itemComp.setVisible(true);
                 amountComp.setVisible(true);
             }
             case "Fluid" -> {
-                hideAll();
                 fluidId.setVisible(true);
                 fluidAmount.setVisible(true);
                 fluidComp.setVisible(true);
                 amountComp.setVisible(true);
             }
             case "Logic" -> {
-                hideAll();
                 logic.setVisible(true);
                 logicComp.setVisible(true);
             }
             case "Number" -> {
-                hideAll();
                 number.setVisible(true);
                 numberComp.setVisible(true);
             }
             case "Text" -> {
-                hideAll();
                 text.setVisible(true);
                 textComp.setVisible(true);
             }
+            case null, default -> hideAll();
         }
     }
 
