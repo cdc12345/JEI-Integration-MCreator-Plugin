@@ -81,17 +81,17 @@ public class RecipeTypeGUI extends ModElementGUI<RecipeType> implements IBlockly
         // JEI Texture
         texture = new TextureSelectionButton(new TypedTextureSelectorDialog(mcreator, TextureType.SCREEN), 258);
         texture.setOpaque(false);
-        x = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
-        y = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
-        width = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
-        height = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
+        x = new JSpinner(new SpinnerNumberModel(0, 0, 256, 1));
+        y = new JSpinner(new SpinnerNumberModel(0, 0, 256, 1));
+        width = new JSpinner(new SpinnerNumberModel(0, 0, 256, 1));
+        height = new JSpinner(new SpinnerNumberModel(0, 0, 256, 1));
 
         // JEI Outside
         icon = new MCItemHolder(mcreator, ElementUtil::loadBlocksAndItems);
         enableTables = new JCheckBox();
         tables = new MCItemListField(mcreator, ElementUtil::loadBlocksAndItems, false, false);
         tables.setEnabled(false);
-        title = new VTextField(32);
+        title = new VTextField();
 
         // Clickable Gui
         enableClickArea = new JCheckBox();
