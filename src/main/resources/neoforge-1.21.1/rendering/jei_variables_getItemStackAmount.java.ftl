@@ -2,13 +2,13 @@
 
 (
     new Object(){
-        public int getItemStackAmount() {
+        public int getItemStackAmount(Object item) {
             <#if io == "Input">
-                if(recipe.${field$name}Item${io}() instanceof SizedIngredient sized) {
+                if(item instanceof SizedIngredient sized) {
                     return sized.ingredient().isEmpty() ? 0 : sized.count();
-                } else if(recipe.${field$name}Item${io}() instanceof Ingredient ingre) {
+                } else if(item instanceof Ingredient ingre) {
                     return ingre.isEmpty() ? 0 : 1;
-                } else if(recipe.${field$name}Item${io}() instanceof Optional<?> opt) {
+                } else if(item instanceof Optional<?> opt) {
                     if(opt.isPresent()) {
                         Object o = opt.get();
                         if(o instanceof SizedIngredient sizedO) {
@@ -23,5 +23,5 @@
                 return recipe.${field$name}Item${io}().getCount();
             </#if>
         }
-    }.getItemStackAmount()
+    }.getItemStackAmount(recipe.${field$name}Item${io}())
 )

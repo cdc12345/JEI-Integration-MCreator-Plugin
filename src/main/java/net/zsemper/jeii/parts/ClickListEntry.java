@@ -69,7 +69,7 @@ public class ClickListEntry extends JSimpleListEntry<RecipeType.ClickListEntry> 
     @Override
     public void setEntry(RecipeType.ClickListEntry entry) {
         clickGui.setEntry(entry.clickGui);
-        clickX.setValue(entry.clickY);
+        clickX.setValue(entry.clickX);
         clickY.setValue(entry.clickY);
         clickWidth.setValue(entry.clickWidth);
         clickHeight.setValue(entry.clickHeight);

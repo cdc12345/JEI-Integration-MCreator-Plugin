@@ -312,13 +312,13 @@ public class RecipeTypeGUI extends ModElementGUI<RecipeType> implements IBlockly
         element.tables = tables.getListElements();
         element.title = title.getText();
 
-        element.enableClickArea = enableClickArea.isSelected();
-        element.clickAreaList = clickAreaList.getEntries();
+        element.slotList = slotList.getEntries();
 
         element.enableRendering = enableRendering.isSelected();
         element.renderXML = blocklyPanel.getXML();
 
-        element.slotList = slotList.getEntries();
+        element.enableClickArea = enableClickArea.isSelected();
+        element.clickAreaList = clickAreaList.getEntries();
         return element;
     }
 
@@ -335,16 +335,17 @@ public class RecipeTypeGUI extends ModElementGUI<RecipeType> implements IBlockly
         tables.setListElements(element.tables);
         title.setText(element.title);
 
+        slotList.setEntries(element.slotList);
+
         enableTables.setSelected(element.enableTables);
         clickAreaList.setEntries(element.clickAreaList);
 
         enableRendering.setSelected(element.enableRendering);
         blocklyPanel.addTaskToRunAfterLoaded(() -> blocklyPanel.setXML(element.renderXML));
 
-        slotList.setEntries(element.slotList);
-
         enableJEIRequired(Constants.JEI(mcreator));
         tables.setEnabled(enableTables.isSelected() && Constants.JEI(mcreator));
+        enableClickArea.setSelected(element.enableClickArea);
         clickAreaList.setEnabled(enableClickArea.isSelected() && Constants.JEI(mcreator));
     }
 

@@ -2,11 +2,11 @@
 
 (
     new Object() {
-        public String getFluidStackName() {
+        public String getFluidStackName(Object fluid) {
             <#if io == "Input">
-		        if(recipe.${field$name}Fluid${io}() instanceof SizedFluidIngredient sized) {
+		        if(fluid instanceof SizedFluidIngredient sized) {
 			        return sized.ingredient().isEmpty() ? "" : sized.getFluids()[0].getHoverName().getString();
-		        } else if(recipe.${field$name}Fluid${io}() instanceof Optional<?> opt) {
+		        } else if(fluid instanceof Optional<?> opt) {
 			        if(opt.isPresent()) {
         				Object o = opt.get();
 				        if(opt.get() instanceof SizedFluidIngredient sizedO) {
@@ -19,5 +19,5 @@
                 return recipe.${field$name}Fluid${io}().getHoverName().getString();
             </#if>
         }
-    }.getFluidStackName()
+    }.getFluidStackName(recipe.${field$name}Fluid${io}())
 )

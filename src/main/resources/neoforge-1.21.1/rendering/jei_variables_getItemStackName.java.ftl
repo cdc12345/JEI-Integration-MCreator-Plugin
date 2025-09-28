@@ -2,13 +2,13 @@
 
 (
     new Object(){
-        public String getItemStackName() {
+        public String getItemStackName(Object item) {
             <#if io == "Input">
-                if(recipe.${field$name}Item${io}() instanceof SizedIngredient sized) {
+                if(item instanceof SizedIngredient sized) {
                     return sized.ingredient().isEmpty() ? "" : sized.getItems()[0].getHoverName().getString();
-                } else if(recipe.${field$name}Item${io}() instanceof Ingredient ingre) {
+                } else if(item instanceof Ingredient ingre) {
                     return ingre.isEmpty() ? "" : ingre.getItems()[0].getHoverName().getString();
-                } else if(recipe.${field$name}Item${io}() instanceof Optional<?> opt) {
+                } else if(item instanceof Optional<?> opt) {
                     if(opt.isPresent()) {
                         Object o = opt.get();
                         if(o instanceof SizedIngredient sizedO) {
@@ -23,5 +23,5 @@
                 return recipe.${field$name}Item${io}().getHoverName().getString();
             </#if>
         }
-    }.getItemStackName()
+    }.getItemStackName(recipe.${field$name}Item${io}())
 )
