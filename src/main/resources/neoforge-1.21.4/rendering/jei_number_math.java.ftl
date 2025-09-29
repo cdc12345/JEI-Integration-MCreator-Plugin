@@ -1,10 +1,8 @@
 <#assign codeEvt = field$operator>
 
-<#assign din = input$number>
-<#assign rl = din?replace("(", "")>
-<#assign rr = rl?replace(")", "")>
+<#assign num = input$number>
 
-<#assign code = codeEvt + "(" + rr + ")">
+<#assign code = codeEvt + "(" + num + ")">
 
 (
     ${code}
