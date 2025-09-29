@@ -1,14 +1,46 @@
 <#include "../mcitems.ftl">
 
+<#assign recipeType = w.hasElementsOfType("recipe_type")?then(w.getGElementsOfType("recipe_type")?filter(recipeType -> recipeType.name == data.category), "")>
+<#assign type = recipeType?has_content?then(recipeType[0], "")>
+
 <#compress>
 {
     "type": "${modid}:${data.recipeType}",
     <#list data.inputs as input>
         <#if input.type == "Item">
-            "${input.name}": {
-                ${mappedMCItemToItemObjectJSON(input.itemId, "item")},
-                "count": ${input.itemAmount}
-            },
+            <#if type != "">
+                <#assign singleIndex = -1>
+
+                <#list type.slotList as slot>
+                    <#if input.name == slot.name && slot.io == "Input">
+                        <#assign singleIndex = slot?index>
+                        <#break>
+                    </#if>
+                </#list>
+
+                <#if singleIndex != -1>
+                    <#if type.slotList.get(singleIndex).singleItem>
+                        ${input.name}: {
+                            ${mappedMCItemToItemObjectJSON(input.itemId, "item")}
+                        },
+                    <#else>
+                        "${input.name}": {
+                            ${mappedMCItemToItemObjectJSON(input.itemId, "item")},
+                            "count": ${input.itemAmount}
+                        },
+                    </#if>
+                <#else>
+                    "${input.name}": {
+                        ${mappedMCItemToItemObjectJSON(input.itemId, "item")},
+                        "count": ${input.itemAmount}
+                    },
+                </#if>
+            <#else>
+                "${input.name}": {
+                    ${mappedMCItemToItemObjectJSON(input.itemId, "item")},
+                    "count": ${input.itemAmount}
+                },
+            </#if>
         <#elseif input.type == "Fluid">
             "${input.name}": {
                 <#assign registryFluid = mappedMCItemToItemObjectJSON(input.fluidId, "fluid")>
