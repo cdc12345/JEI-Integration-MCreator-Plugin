@@ -196,8 +196,8 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
 		}
 
 		// Test double
-		if(given instanceof Double[] doub && recipe instanceof Double rec) {
-			return doub[0].equals(rec);
+		if(given instanceof double[] doub && recipe instanceof Double rec) {
+			return doub[0] >= rec;
 		}
 
 		// Test String
