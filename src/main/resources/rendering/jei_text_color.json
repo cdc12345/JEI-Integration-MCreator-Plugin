@@ -1,0 +1,21 @@
+{
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "HEX",
+      "text": "#67A55B"
+    }
+  ],
+  "extensions": [
+    "color_changing"
+  ],
+  "output": "String",
+  "colour": "#67a55b",
+  "mcreator": {
+    "group": "text19",
+    "toolbox_id": "jei_text",
+    "fields": [
+      "HEX"
+    ]
+  }
+}

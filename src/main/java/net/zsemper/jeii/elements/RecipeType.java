@@ -66,6 +66,7 @@ public class RecipeType extends GeneratableElement {
         public boolean optional;
         @TextureReference(TextureType.SCREEN)
         public TextureHolder resource;
+        public String custom;
         public int resourceWidth;
         public int resourceHeight;
 

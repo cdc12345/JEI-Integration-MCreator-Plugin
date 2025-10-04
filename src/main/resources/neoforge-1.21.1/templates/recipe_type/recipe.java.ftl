@@ -24,7 +24,11 @@ package ${package}.recipe;
             </#if>
         <#elseif slot.io == "Output">
             <#assign pureIO += ["${slot.name}${slot.type}${slot.io}"]>
-            <#assign varsIO += ["ItemStack ${slot.name}${slot.type}${slot.io}"]>
+            <#if slot.optional>
+                <#assign varsIO += ["Optional<ItemStack> ${slot.name}${slot.type}${slot.io}"]>
+            <#else>
+                <#assign varsIO += ["ItemStack ${slot.name}${slot.type}${slot.io}"]>
+            </#if>
         </#if>
     <#elseif slot.type == "Fluid">
         <#if slot.io == "Input">
@@ -36,7 +40,11 @@ package ${package}.recipe;
             </#if>
         <#elseif slot.io == "Output">
             <#assign pureIO += ["${slot.name}${slot.type}${slot.io}"]>
-            <#assign varsIO += ["FluidStack ${slot.name}${slot.type}${slot.io}"]>
+            <#if slot.optional>
+                <#assign varsIO += ["Optional<FluidStack> ${slot.name}${slot.type}${slot.io}"]>
+            <#else>
+                <#assign varsIO += ["FluidStack ${slot.name}${slot.type}${slot.io}"]>
+            </#if>
         </#if>
     <#elseif slot.type == "Logic">
         <#if slot.io == "Input">
@@ -73,9 +81,15 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
     public @NotNull ItemStack getItemStackResult(String output) {
         <#list data.slotList as slot>
             <#if slot.io == "Output" && slot.type == "Item">
-                if(output.equals("${slot.name}")) {
-                    return ${slot.name}${slot.type}${slot.io};
-                }
+                <#if slot.optional>
+                    if(output.equals("${slot.name}") && ${slot.name}${slot.type}${slot.io}.isPresent()) {
+                        return ${slot.name}${slot.type}${slot.io}.get();
+                    }
+                <#else>
+                    if(output.equals("${slot.name}")) {
+                        return ${slot.name}${slot.type}${slot.io};
+                    }
+                </#if>
             </#if>
         </#list>
         return ItemStack.EMPTY;
@@ -84,9 +98,15 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
     public @NotNull FluidStack getFluidStackResult(String output) {
         <#list data.slotList as slot>
             <#if slot.io == "Output" && slot.type == "Fluid">
-                if(output.equals("${slot.name}")) {
-                    return ${slot.name}${slot.type}${slot.io};
-                }
+                <#if slot.optional>
+                    if(output.equals("${slot.name}") && ${slot.name}${slot.type}${slot.io}.isPresent()) {
+                        return ${slot.name}${slot.type}${slot.io}.get();
+                    }
+                <#else>
+                    if(output.equals("${slot.name}")) {
+                        return ${slot.name}${slot.type}${slot.io};
+                    }
+                </#if>
             </#if>
         </#list>
         return FluidStack.EMPTY;
@@ -177,8 +197,8 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
 		}
 
 		// Test double
-		if(given instanceof Double doub && recipe instanceof Double rec) {
-			return doub.equals(rec);
+		if(given instanceof Double[] doub && recipe instanceof Double rec) {
+			return doub[0].equals(rec);
 		}
 
 		// Test String
@@ -217,18 +237,12 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
             }
         }
 
+        if(recipe instanceof Double doub) {
+            return doub.intValue();
+        }
+
         return 0;
 	}
-
-    @Override
-    public @NotNull RecipeSerializer<?> getSerializer() {
-        return Serializer.INSTANCE;
-    }
-
-    @Override
-    public @NotNull RecipeType<?> getType() {
-        return Type.INSTANCE;
-    }
 
     public static class Type implements RecipeType<${name}Recipe> {
         private Type(){}
@@ -260,7 +274,11 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
                             </#if>
 
                         <#elseif slot.io == "Output">
-                            <#assign ingre += ["ItemStack.CODEC.fieldOf(\"${slot.name}\").forGetter(${name}Recipe::${slot.name}${slot.type}${slot.io})"]>
+                            <#if slot.optional>
+                                <#assign ingre += ["ItemStack.CODEC.optionalFieldOf(\"${slot.name}\").forGetter(${name}Recipe::${slot.name}${slot.type}${slot.io})"]>
+                            <#else>
+                                <#assign ingre += ["ItemStack.CODEC.fieldOf(\"${slot.name}\").forGetter(${name}Recipe::${slot.name}${slot.type}${slot.io})"]>
+                            </#if>
                         </#if>
                     <#elseif slot.type == "Fluid">
                         <#if slot.io == "Input">
@@ -270,7 +288,11 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
                                 <#assign ingre += ["SizedFluidIngredient.FLAT_CODEC.fieldOf(\"${slot.name}\").forGetter(${name}Recipe::${slot.name}${slot.type}${slot.io})"]>
                             </#if>
                         <#elseif slot.io == "Output">
-                            <#assign ingre += ["FluidStack.CODEC.fieldOf(\"${slot.name}\").forGetter(${name}Recipe::${slot.name}${slot.type}${slot.io})"]>
+                            <#if slot.optional>
+                                <#assign ingre += ["FluidStack.CODEC.optionalFieldOf(\"${slot.name}\").forGetter(${name}Recipe::${slot.name}${slot.type}${slot.io})"]>
+                            <#else>
+                                <#assign ingre += ["FluidStack.CODEC.fieldOf(\"${slot.name}\").forGetter(${name}Recipe::${slot.name}${slot.type}${slot.io})"]>
+                            </#if>
                         </#if>
                     <#elseif slot.type == "Logic">
                         <#if slot.optional>
@@ -330,7 +352,11 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
                             </#if>
                         </#if>
                     <#elseif slot.io == "Output">
-                        ItemStack ${slot.name}${slot.type}${slot.io} = ItemStack.STREAM_CODEC.decode(buffer);
+                        <#if slot.optional>
+                            Optional<ItemStack> ${slot.name}${slot.type}${slot.io} = ByteBufCodecs.optional(ItemStack.STREAM_CODEC).decode(buffer);
+                        <#else>
+                            ItemStack ${slot.name}${slot.type}${slot.io} = ItemStack.STREAM_CODEC.decode(buffer);
+                        </#if>
                     </#if>
                 <#elseif slot.type == "Fluid">
                     <#if slot.io == "Input">
@@ -340,7 +366,11 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
                             SizedFluidIngredient ${slot.name}${slot.type}${slot.io} = SizedFluidIngredient.STREAM_CODEC.decode(buffer);
                         </#if>
                     <#elseif slot.io == "Output">
-                        FluidStack ${slot.name}${slot.type}${slot.io} = FluidStack.STREAM_CODEC.decode(buffer);
+                        <#if slot.optional>
+                            Optional<FluidStack> ${slot.name}${slot.type}${slot.io} = ByteBufCodecs.optional(FluidStack.STREAM_CODEC).decode(buffer);
+                        <#else>
+                            FluidStack ${slot.name}${slot.type}${slot.io} = FluidStack.STREAM_CODEC.decode(buffer);
+                        </#if>
                     </#if>
                 <#elseif slot.type == "Logic">
                     boolean ${slot.name}${slot.type}${slot.io} = buffer.readBoolean();
@@ -371,7 +401,11 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
                             </#if>
                         </#if>
                     <#elseif slot.io == "Output">
-                        ItemStack.STREAM_CODEC.encode(buffer, recipe.${slot.name}${slot.type}${slot.io}());
+                        <#if slot.optional>
+                            ByteBufCodecs.optional(ItemStack.STREAM_CODEC).encode(buffer, recipe.${slot.name}${slot.type}${slot.io}());
+                        <#else>
+                            ItemStack.STREAM_CODEC.encode(buffer, recipe.${slot.name}${slot.type}${slot.io}());
+                        </#if>
                     </#if>
                 <#elseif slot.type == "Fluid">
                     <#if slot.io == "Input">
@@ -381,7 +415,11 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
                             SizedFluidIngredient.STREAM_CODEC.encode(buffer, recipe.${slot.name}${slot.type}${slot.io}());
                         </#if>
                     <#elseif slot.io == "Output">
-                        FluidStack.STREAM_CODEC.encode(buffer, recipe.${slot.name}${slot.type}${slot.io}());
+                        <#if slot.optional>
+                            ByteBufCodecs.optional(FluidStack.STREAM_CODEC).encode(buffer, recipe.${slot.name}${slot.type}${slot.io}());
+                        <#else>
+                            FluidStack.STREAM_CODEC.encode(buffer, recipe.${slot.name}${slot.type}${slot.io}());
+                        </#if>
                     </#if>
                 <#elseif slot.type == "Logic">
                     buffer.writeBoolean(recipe.${slot.name}${slot.type}${slot.io}());
@@ -396,6 +434,18 @@ public record ${name}Recipe(${varsIO?join(", ")}) implements Recipe<RecipeInput>
         static ${name}Recipe create${name}Recipe(${varsIO?join(", ")}) {
             return new ${name}Recipe(${pureIO?join(", ")});
         }
+    }
+
+    // Unused
+    @Override
+    public @NotNull RecipeSerializer<?> getSerializer() {
+        return Serializer.INSTANCE;
+    }
+
+    // Unused
+    @Override
+    public @NotNull RecipeType<?> getType() {
+        return Type.INSTANCE;
     }
 
     // Unused

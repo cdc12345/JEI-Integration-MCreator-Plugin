@@ -1,0 +1,19 @@
+{
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "name",
+      "text": "name"
+    }
+  ],
+  "inputsInline": true,
+  "output": "Number",
+  "colour": "#5b67a5",
+  "mcreator": {
+    "group": 8,
+    "toolbox_id": "jei_utils",
+    "fields": [
+      "name"
+    ]
+  }
+}

@@ -17,6 +17,11 @@
     },
     {
       "type": "input_value",
+      "name": "color",
+      "check": "String"
+    },
+    {
+      "type": "input_value",
       "name": "shadow",
       "check": "Boolean"
     }
@@ -31,12 +36,14 @@
     "toolbox_init": [
       "<value name=\"xPos\"><block type=\"jei_number_input\"><field name=\"number\">0</field></block></value>",
       "<value name=\"yPos\"><block type=\"jei_number_input\"><field name=\"number\">0</field></block></value>",
+      "<value name=\"color\"><block type=\"jei_text_color\"><field name=\"HEX\">#67a55b</field></block></value>",
       "<value name=\"shadow\"><block type=\"jei_logic_input\"></block></value>"
     ],
     "inputs": [
       "xPos",
       "yPos",
       "text",
+      "color",
       "shadow"
     ]
   }

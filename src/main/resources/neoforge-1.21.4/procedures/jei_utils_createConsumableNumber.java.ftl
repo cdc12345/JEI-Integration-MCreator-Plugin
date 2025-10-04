@@ -1,0 +1,1 @@
+double[] _${field$name}_ = { ${input$num} };

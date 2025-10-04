@@ -19,7 +19,7 @@
                 <#elseif typeArray[i] == "Boolean">
                     <#assign head += ["boolean ${nameArray[i]}LogicInput"]>
                 <#elseif typeArray[i] == "Number">
-                    <#assign head += ["double ${nameArray[i]}NumberInput"]>
+                    <#assign head += ["double[] ${nameArray[i]}NumberInput"]>
                 <#elseif typeArray[i] == "String">
                     <#assign head += ["String ${nameArray[i]}StringInput"]>
                 </#if>
@@ -94,7 +94,9 @@
                                 <#if typeArray[i] == "MCItem">
                                     ${nameArray[i]}ItemInput.shrink(recipe.amount(recipe.${nameArray[i]}ItemInput()));
                                 <#elseif typeArray[i] == "FluidStack">
-                                    ${nameArray[i]}FluidInput.shrink(recipe.amount(recipe.${nameArray[i]}FluidInput().getAmount()));
+                                    ${nameArray[i]}FluidInput.shrink(recipe.amount(recipe.${nameArray[i]}FluidInput()));
+                                <#elseif typeArray[i] == "Number">
+                                    ${nameArray[i]}NumberInput[0] -= recipe.amount(recipe.${nameArray[i]}NumberInput());
                                 </#if>
                             </#if>
                         </#list>
@@ -109,7 +111,19 @@
         }
     }.isRecipeValid(
         <#list input_list$entry as entry>
-            ${entry}<#sep>,
+            <#assign i = entry?index>
+
+            <#if typeArray[i] == "MCItem">
+                ${mappedMCItemToItemStackCode(entry)}<#sep>,
+            <#elseif typeArray[i] == "Number">
+                <#if entry?contains("_")>
+                    ${entry?replace("[0]", "")}<#sep>,
+                <#else>
+                    new double[]{${entry}}<#sep>,
+                </#if>
+            <#else>
+                ${entry}<#sep>,
+            </#if>
         </#list>
     )
 )

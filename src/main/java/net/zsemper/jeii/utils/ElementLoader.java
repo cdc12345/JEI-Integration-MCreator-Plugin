@@ -17,11 +17,11 @@ public class ElementLoader {
         );
 
         RECIPE_TYPE = register(
-                new ModElementType<>("recipe_type", 'R', RecipeTypeGUI::new, RecipeType.class)
+            new ModElementType<>("recipe_type", 'R', RecipeTypeGUI::new, RecipeType.class)
         );
 
         RECIPE = register(
-                new ModElementType<>("custom_recipe", 'C', RecipeGUI::new, Recipe.class)
+            new ModElementType<>("custom_recipe", 'C', RecipeGUI::new, Recipe.class)
         );
     }
 }

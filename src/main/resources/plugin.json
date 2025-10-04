@@ -1,15 +1,13 @@
 {
   "id": "jei_integration",
   "supportedversions": [
-    2024004,
-    2025002,
-    2025003
+    2025002
   ],
   "weight": 3001,
   "javaplugin": "net.zsemper.jeii.ModPlugin",
   "info": {
     "name": "JEI Integration",
-    "version": "1.0",
+    "version": "1.2",
     "description": "Integrates custom recipes and JEI into your mods",
     "author": "zSemper"
   }

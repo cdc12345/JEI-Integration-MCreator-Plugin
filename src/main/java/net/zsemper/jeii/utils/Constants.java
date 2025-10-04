@@ -9,6 +9,13 @@ import org.apache.logging.log4j.Logger;
 import java.awt.*;
 
 public final class Constants {
+    /*
+     * if true unlocks developer tools normally hidden to the user
+     *
+     * false by default
+     */
+    public static final boolean DEV_MODE = false;
+
     // Plugin Logger
     public static final Logger LOG = LogManager.getLogger("JEI Integration");
 

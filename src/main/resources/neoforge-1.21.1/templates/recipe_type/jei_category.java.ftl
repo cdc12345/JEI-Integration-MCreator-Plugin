@@ -88,6 +88,8 @@ public class ${name}JeiCategory implements IRecipeCategory<${name}Recipe> {
                         .setFluidRenderer(1, false, 16, ${slot.height});
                     </#if>
                 </#if>
+            <#elseif slot.io == "Custom">
+                ${slot.custom}
             </#if>
         </#list>
     }
