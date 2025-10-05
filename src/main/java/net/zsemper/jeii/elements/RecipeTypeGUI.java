@@ -25,7 +25,6 @@ import net.mcreator.ui.minecraft.MCItemListField;
 import net.mcreator.ui.minecraft.TextureSelectionButton;
 import net.mcreator.ui.modgui.IBlocklyPanelHolder;
 import net.mcreator.ui.modgui.ModElementGUI;
-import net.mcreator.ui.validation.AggregatedValidationResult;
 import net.mcreator.ui.validation.component.VTextField;
 import net.mcreator.ui.workspace.resources.TextureType;
 import net.mcreator.util.StringUtils;
@@ -152,12 +151,10 @@ public class RecipeTypeGUI extends ModElementGUI<RecipeType> implements IBlockly
     @Override
     protected void initGUI() {
         JLabel enableRenderLabel = L10N.label("elementGui.recipeType.enableRender", Constants.NO_PARAMS);
-        JLabel enableClickAreaLabel = L10N.label("elementGui.recipeType.enableClickArea", Constants.NO_PARAMS);
         BlocklyEditorToolbar toolbar = new BlocklyEditorToolbar(mcreator, Constants.RENDER_EDITOR, blocklyPanel);
 
         ComponentUtils.deriveFont(title, 16);
         ComponentUtils.deriveFont(enableRenderLabel, 16);
-        ComponentUtils.deriveFont(enableClickAreaLabel, 16);
 
         blocklyPanel.addTaskToRunAfterLoaded(() -> {
             BlocklyLoader.INSTANCE.getBlockLoader(Constants.RENDER_EDITOR).loadBlocksAndCategoriesInPanel(blocklyPanel, ToolboxType.EMPTY);
@@ -183,16 +180,16 @@ public class RecipeTypeGUI extends ModElementGUI<RecipeType> implements IBlockly
         JPanel gProps = new JPanel(new BorderLayout(2, 2));
         JPanel gSlots = new JPanel(new BorderLayout(2, 2));
         JPanel gRender = new JPanel(new BorderLayout(2, 2));
-        JPanel gClick = new JPanel(new BorderLayout(2, 2));
         gProps.setOpaque(false);
         gSlots.setOpaque(false);
         gRender.setOpaque(false);
-        gClick.setOpaque(false);
+
+
 
         // Properties Main
-        JPanel mPropsMain = new JPanel();
-        mPropsMain.setLayout(new BoxLayout(mPropsMain, BoxLayout.X_AXIS));
-        mPropsMain.setOpaque(false);
+        JPanel mPropsProp = new JPanel();
+        mPropsProp.setLayout(new BoxLayout(mPropsProp, BoxLayout.X_AXIS));
+        mPropsProp.setOpaque(false);
 
         // Properties Texture
         JPanel mPropsTex = new JPanel();
@@ -235,10 +232,31 @@ public class RecipeTypeGUI extends ModElementGUI<RecipeType> implements IBlockly
         mPropsBase.add(HelpUtils.wrapWithHelpButton(this.withEntry("recipe_type/texture"), L10N.label("elementGui.recipeType.texture", Constants.NO_PARAMS)));
         mPropsBase.add(mPropsPos);
 
-        mPropsMain.add(GuiUtils.BORDER_PANEL("elementGui.recipeType.jeiTexture", mPropsTex));
-        mPropsMain.add(GuiUtils.BORDER_PANEL("elementGui.recipeType.properties", mPropsBase));
+        mPropsProp.add(GuiUtils.BORDER_PANEL("elementGui.recipeType.jeiTexture", mPropsTex));
+        mPropsProp.add(GuiUtils.BORDER_PANEL("elementGui.recipeType.properties", mPropsBase));
+
+        // Click Areas
+        JPanel mPropsClickEnable = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        mPropsClickEnable.setOpaque(false);
+        mPropsClickEnable.add(HelpUtils.wrapWithHelpButton(this.withEntry("recipe_type/click_area"), L10N.label("elementGui.recipeType.enableClickArea", Constants.NO_PARAMS)));
+        mPropsClickEnable.add(enableClickArea);
+
+        JPanel mPropsClick = new JPanel(new BorderLayout());
+        mPropsClick.setOpaque(false);
+        mPropsClick.setBorder(GuiUtils.BORDER("elementGui.recipeType.clickAreas", mPropsClick));
+        mPropsClick.add(PanelUtils.northAndCenterElement(mPropsClickEnable, clickAreaList));
+        mPropsClick.setPreferredSize(new Dimension(mPropsClick.getPreferredSize().width, 260));
+
+        JPanel mPropsMain = new JPanel();
+        mPropsMain.setOpaque(false);
+        mPropsMain.setLayout(new BoxLayout(mPropsMain, BoxLayout.Y_AXIS));
+
+        mPropsMain.add(mPropsProp);
+        mPropsMain.add(mPropsClick);
 
         gProps.add(PanelUtils.totalCenterInPanel(mPropsMain));
+
+
 
         // Slots
         JPanel mSlots = new JPanel(new BorderLayout());
@@ -246,6 +264,8 @@ public class RecipeTypeGUI extends ModElementGUI<RecipeType> implements IBlockly
         mSlots.setBorder(GuiUtils.EMPTY_BORDER(10));
         mSlots.add(slotList);
         gSlots.add(mSlots);
+
+
 
         // Render (Blockly)
         JPanel mRenderMain = new JPanel(new BorderLayout());
@@ -269,24 +289,12 @@ public class RecipeTypeGUI extends ModElementGUI<RecipeType> implements IBlockly
 
         gRender.add(mRenderMain);
 
-        // Clickable Areas
-        JPanel mClickEnable = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        mClickEnable.setOpaque(false);
-        mClickEnable.add(HelpUtils.wrapWithHelpButton(this.withEntry("recipe_type/click_area"), enableClickAreaLabel));
-        mClickEnable.add(enableClickArea);
-
-        JPanel mClickMain = new JPanel(new BorderLayout());
-        mClickMain.setOpaque(false);
-        mClickMain.setBorder(GuiUtils.EMPTY_BORDER(10));
-        mClickMain.add(PanelUtils.northAndCenterElement(mClickEnable, clickAreaList));
-        gClick.add(mClickMain);
 
 
         // Add pages
         addPage(L10N.t("elementGui.recipeType.pageProperties", Constants.NO_PARAMS), gProps);
         addPage(L10N.t("elementGui.recipeType.pageSlots", Constants.NO_PARAMS), gSlots);
         addPage(L10N.t("elementGui.recipeType.pageDraw", Constants.NO_PARAMS), gRender);
-        addPage(L10N.t("elementGui.recipeType.pageClickable", Constants.NO_PARAMS), gClick);
 
         if (!isEditingMode()) {
             title.setText(StringUtils.machineToReadableName(modElement.getName()));

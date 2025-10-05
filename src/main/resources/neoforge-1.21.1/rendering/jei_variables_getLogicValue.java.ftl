@@ -1,3 +1,3 @@
 (
-    recipe.${field$name}Logic${field$io}()
+    recipe.value().${field$name}Logic${field$io}()
 )

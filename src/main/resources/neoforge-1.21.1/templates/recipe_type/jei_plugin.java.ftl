@@ -8,7 +8,7 @@ import mezz.jei.api.recipe.RecipeType;
 @JeiPlugin
 public class ${JavaModName}JeiPlugin implements IModPlugin {
     <#list recipe_types as type>
-        public static RecipeType<${type.getModElement().getName()}Recipe> ${type.getModElement().getName()}CategoryType = new RecipeType<>(${type.getModElement().getName()}JeiCategory.UID, ${type.getModElement().getName()}Recipe.class);
+        public static RecipeType<RecipeHolder<${type.getModElement().getName()}Recipe>> ${type.getModElement().getName()}CategoryType = new RecipeType<>(${type.getModElement().getName()}JeiCategory.UID, (Class<RecipeHolder<${type.getModElement().getName()}Recipe>>) (Class<?>) ${type.getModElement().getName()}Recipe.class);
     </#list>
 
     @Override
@@ -19,8 +19,7 @@ public class ${JavaModName}JeiPlugin implements IModPlugin {
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registration) {
 	    <#list recipe_types as type>
-	        registration.addRecipeCategories(new
-	            ${type.getModElement().getName()}JeiCategory(registration.getJeiHelpers().getGuiHelper()));
+	        registration.addRecipeCategories(new ${type.getModElement().getName()}JeiCategory(registration.getJeiHelpers().getGuiHelper()));
 	    </#list>
 	}
 
@@ -29,8 +28,7 @@ public class ${JavaModName}JeiPlugin implements IModPlugin {
 		RecipeManager recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
 
 		<#list recipe_types as type>
-            List<${type.getModElement().getName()}Recipe> ${type.getModElement().getName()}Recipes = recipeManager.getAllRecipesFor(${type.getModElement().getName()}Recipe.Type.INSTANCE).stream().map(RecipeHolder::value).collect(Collectors.toList());
-            registration.addRecipes(${type.getModElement().getName()}CategoryType, ${type.getModElement().getName()}Recipes);
+            registration.addRecipes(${type.getModElement().getName()}CategoryType, recipeManager.getAllRecipesFor(${type.getModElement().getName()}Recipe.Type.INSTANCE));
 		</#list>
 	}
 

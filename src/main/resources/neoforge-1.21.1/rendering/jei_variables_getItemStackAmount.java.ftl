@@ -20,8 +20,8 @@
                 }
                 return 0;
             <#elseif io == "Output">
-                return recipe.${field$name}Item${io}().getCount();
+                return recipe.value().${field$name}Item${io}().getCount();
             </#if>
         }
-    }.getItemStackAmount(recipe.${field$name}Item${io}())
+    }.getItemStackAmount(recipe.value().${field$name}Item${io}())
 )

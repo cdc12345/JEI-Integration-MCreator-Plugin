@@ -16,8 +16,8 @@
 		        }
 		        return 0;
             <#elseif io == "Output">
-                return recipe.${field$name}Fluid${io}().getAmount();
+                return recipe.value().${field$name}Fluid${io}().getAmount();
             </#if>
         }
-    }.getFluidStackAmount(recipe.${field$name}Fluid${io}())
+    }.getFluidStackAmount(recipe.value().${field$name}Fluid${io}())
 )

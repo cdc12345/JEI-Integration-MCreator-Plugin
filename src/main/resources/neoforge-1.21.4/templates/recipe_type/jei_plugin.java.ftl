@@ -8,7 +8,7 @@ import mezz.jei.api.recipe.types.IRecipeType;
 @JeiPlugin
 public class ${JavaModName}JeiPlugin implements IModPlugin {
     <#list recipe_types as type>
-        public static IRecipeType<${type.getModElement().getName()}Recipe> ${type.getModElement().getName()}CategoryType = IRecipeType.create(${type.getModElement().getName()}JeiCategory.UID, ${type.getModElement().getName()}Recipe.class);
+        public static IRecipeType<${type.getModElement().getName()}Recipe> ${type.getModElement().getName()}CategoryType = IRecipeType.create(${type.getModElement().getName()}JeiCategory.UID, (Class<RecipeHolder<${type.getModElement().getName()}Recipe>>) (Class<?>) ${type.getModElement().getName()}Recipe.class);
     </#list>
 
     @Override
@@ -19,16 +19,14 @@ public class ${JavaModName}JeiPlugin implements IModPlugin {
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registration) {
 	    <#list recipe_types as type>
-	        registration.addRecipeCategories(new
-	            ${type.getModElement().getName()}JeiCategory(registration.getJeiHelpers().getGuiHelper()));
+	        registration.addRecipeCategories(new ${type.getModElement().getName()}JeiCategory(registration.getJeiHelpers().getGuiHelper()));
 	    </#list>
 	}
 
 	@Override
 	public void registerRecipes(IRecipeRegistration registration) {
 	    <#list recipe_types as type>
-            List<${type.getModElement().getName()}Recipe> ${type.getModElement().getName()}Recipes = ${JavaModName}RecipeTypes.recipeMap.byType(${type.getModElement().getName()}Recipe.Type.INSTANCE).stream().map(RecipeHolder::value).collect(Collectors.toList());
-            registration.addRecipes(${type.getModElement().getName()}CategoryType, ${type.getModElement().getName()}Recipes);
+            registration.addRecipes(${type.getModElement().getName()}CategoryType, ${JavaModName}RecipeTypes.recipeMap.byType(${type.getModElement().getName()}Recipe.Type.INSTANCE));
         </#list>
 	}
 

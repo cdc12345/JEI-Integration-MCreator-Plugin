@@ -20,8 +20,8 @@
                 }
                 return "";
             <#elseif io == "Output">
-                return recipe.${field$name}Item${io}().getHoverName().getString();
+                return recipe.value().${field$name}Item${io}().getHoverName().getString();
             </#if>
         }
-    }.getItemStackName(recipe.${field$name}Item${io}())
+    }.getItemStackName(recipe.value().${field$name}Item${io}())
 )

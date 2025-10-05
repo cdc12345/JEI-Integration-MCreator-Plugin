@@ -1,3 +1,3 @@
 (
-    recipe.${field$name}Text${field$io}()
+    recipe.value().${field$name}Text${field$io}()
 )

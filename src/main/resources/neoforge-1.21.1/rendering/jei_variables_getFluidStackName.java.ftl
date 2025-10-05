@@ -16,8 +16,8 @@
 		        }
 		        return "";
             <#elseif io == "Output">
-                return recipe.${field$name}Fluid${io}().getHoverName().getString();
+                return recipe.value().${field$name}Fluid${io}().getHoverName().getString();
             </#if>
         }
-    }.getFluidStackName(recipe.${field$name}Fluid${io}())
+    }.getFluidStackName(recipe.value().${field$name}Fluid${io}())
 )

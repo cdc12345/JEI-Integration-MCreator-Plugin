@@ -7,7 +7,7 @@ import mezz.jei.api.recipe.types.IRecipeType;
 import java.util.Optional;
 import java.util.List;
 
-public class ${name}JeiCategory implements IRecipeCategory<${name}Recipe> {
+public class ${name}JeiCategory implements IRecipeCategory<RecipeHolder<${name}Recipe>> {
     public static final ResourceLocation UID = ResourceLocation.parse("${modid}:${data.getModElement().getRegistryName()}");
     public static final ResourceLocation TEXTURE = ResourceLocation.parse("${modid}:textures/screens/${data.texture}.png");
 
@@ -20,7 +20,7 @@ public class ${name}JeiCategory implements IRecipeCategory<${name}Recipe> {
     }
 
     @Override
-    public IRecipeType<${name}Recipe> getRecipeType() {
+    public IRecipeType<RecipeHolder<${name}Recipe>> getRecipeType() {
         return ${JavaModName}JeiPlugin.${name}CategoryType;
     }
 
@@ -45,7 +45,7 @@ public class ${name}JeiCategory implements IRecipeCategory<${name}Recipe> {
     }
 
     @Override
-    public void draw(${name}Recipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(RecipeHolder<${name}Recipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         this.background.draw(guiGraphics);
         <#if data.enableRendering>
             Font font = Minecraft.getInstance().font;
@@ -63,13 +63,13 @@ public class ${name}JeiCategory implements IRecipeCategory<${name}Recipe> {
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, ${name}Recipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<${name}Recipe> recipe, IFocusGroup focuses) {
         <#list data.slotList as slot>
             <#if slot.io == "Input">
                 <#if slot.type == "Item">
-                    builder.addSlot(RecipeIngredientRole.INPUT, ${slot.x}, ${slot.y}).addIngredients(VanillaTypes.ITEM_STACK, getItemStacks(recipe.${slot.name}ItemInput()));
+                    builder.addSlot(RecipeIngredientRole.INPUT, ${slot.x}, ${slot.y}).addIngredients(VanillaTypes.ITEM_STACK, getItemStacks(recipe.value().${slot.name}ItemInput()));
                 <#elseif slot.type == "Fluid">
-                    builder.addSlot(RecipeIngredientRole.INPUT, ${slot.x}, ${slot.y}).addIngredients(NeoForgeTypes.FLUID_STACK, getFluidStacks(recipe.${slot.name}FluidInput()))
+                    builder.addSlot(RecipeIngredientRole.INPUT, ${slot.x}, ${slot.y}).addIngredients(NeoForgeTypes.FLUID_STACK, getFluidStacks(recipe.value().${slot.name}FluidInput()))
                     <#if slot.fullTank>
                         .setFluidRenderer(${slot.tankCapacity}, false, 16, ${slot.height});
                     <#else>
@@ -79,9 +79,9 @@ public class ${name}JeiCategory implements IRecipeCategory<${name}Recipe> {
                 </#if>
             <#elseif slot.io == "Output">
                 <#if slot.type == "Item">
-                    builder.addSlot(RecipeIngredientRole.OUTPUT, ${slot.x}, ${slot.y}).add(recipe.getItemStackResult("${slot.name}"));
+                    builder.addSlot(RecipeIngredientRole.OUTPUT, ${slot.x}, ${slot.y}).add(recipe.value().getItemStackResult("${slot.name}"));
                 <#elseif slot.type == "Fluid">
-                    builder.addSlot(RecipeIngredientRole.OUTPUT, ${slot.x}, ${slot.y}).add(recipe.getFluidStackResult("${slot.name}").getFluid(), (long) recipe.getFluidStackResult("${slot.name}").getAmount())
+                    builder.addSlot(RecipeIngredientRole.OUTPUT, ${slot.x}, ${slot.y}).add(recipe.value().getFluidStackResult("${slot.name}").getFluid(), (long) recipe.value().getFluidStackResult("${slot.name}").getAmount())
                     <#if slot.fullTank>
                         .setFluidRenderer(${slot.tankCapacity}, false, 16, ${slot.height});
                     <#else>
