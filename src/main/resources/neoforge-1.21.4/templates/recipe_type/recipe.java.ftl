@@ -40,7 +40,7 @@ package ${package}.recipe;
         <#elseif slot.io == "Output">
             <#assign pureIO += ["${slot.name}${slot.type}${slot.io}"]>
             <#if slot.optional>
-                <#assogn varsIO += ["Optional<FluidStack> ${slot.name}${slot.type}${slot.io}"]>
+                <#assign varsIO += ["Optional<FluidStack> ${slot.name}${slot.type}${slot.io}"]>
             <#else>
                 <#assign varsIO += ["FluidStack ${slot.name}${slot.type}${slot.io}"]>
             </#if>

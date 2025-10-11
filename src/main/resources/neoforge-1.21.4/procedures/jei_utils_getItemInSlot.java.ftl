@@ -1,3 +1,4 @@
+/*@ItemStack*/
 (
     new Object() {
         public ItemStack getItemInSlot(LevelAccessor level, BlockPos pos, int slot) {
