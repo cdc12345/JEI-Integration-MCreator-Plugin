@@ -16,6 +16,10 @@ public class ModPlugin extends JavaPlugin {
             BlocklyLoader.INSTANCE.addBlockLoader(Constants.RENDER_EDITOR);
         });
 
-        Constants.LOG.info("JEI Integration was loaded");
+        if (Constants.DEV_MODE) {
+            Constants.LOG.info("JEI Integration was loaded in DEV_MODE");
+        } else {
+            Constants.LOG.info("JEI Integration was loaded");
+        }
     }
 }

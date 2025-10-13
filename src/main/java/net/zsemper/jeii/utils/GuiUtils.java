@@ -64,6 +64,11 @@ public final class GuiUtils {
                     try {
                         String str = evt.getDocument().getText(0, evt.getDocument().getLength());
                         String set = str.toLowerCase();
+                        if (set.isEmpty()) return;
+
+                        if (Character.isDigit(set.charAt(0))) {
+                            set = set.substring(1);
+                        }
 
                         if(!str.equals(set)) {
                             this0.setText(set);
