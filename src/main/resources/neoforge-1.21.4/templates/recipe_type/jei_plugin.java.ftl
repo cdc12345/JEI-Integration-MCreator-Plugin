@@ -34,9 +34,11 @@ public class ${JavaModName}JeiPlugin implements IModPlugin {
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
 	    <#list recipe_types as type>
 	        <#if type.enableTables>
-	            <#list type.tables as block>
-	                registration.addRecipeCatalyst(new ItemStack(${mappedMCItemToItem(block)}), ${type.getModElement().getName()}CategoryType);
-	            </#list>
+	            registration.addCraftingStations(${type.getModElement().getName()}CategoryType, VanillaTypes.ITEM_STACK, List.of(
+	                <#list type.tables as block>
+	                    new ItemStack(${mappedMCItemToItem(block)})<#sep>,
+	                </#list>
+	            ));
 	        </#if>
 	    </#list>
 	}
